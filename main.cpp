@@ -4,6 +4,8 @@
 
 using namespace std;
 
+// fichier principal 
+
 int main()
 {
 	int niv = 0;    //Niveau que l'utilisateur sera amené à choisir
