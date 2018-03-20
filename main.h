@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 
+#include "Contraintes.h"
 #include "Arcs.h"
 #include "Graph.h"
 

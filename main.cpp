@@ -10,6 +10,8 @@ int main()
 {
 	int niv = 0;    //Niveau que l'utilisateur sera amené à choisir
 	Graph graphe;
+	Graph graph2;
+	Contraintes contrainte;
 	int nbSommets, nbArcs;
 	string tmp;
 	cout << "****** Projet de theorie des graphes ******" << endl << endl << endl;
@@ -53,20 +55,9 @@ int main()
 			/// On met les résultats dans l'objet graphe
 
 			graphe.setArcs(arcs);
-			///Affichage du graphe (contenu du fichier)
-			//Optionnel
-			cout << '\t' << graphe.getNbSommets() << '\t' << '\t' << '\t' << "Nombre de sommets du graphe" << endl;
-			cout << '\t' << graphe.getNbArcs() << '\t' << '\t' << '\t' << "Nombre d'arcs du graphe" << endl;
-			for (int i = 0; i<graphe.getNbArcs(); i++)
-			{
-				cout << '\t' << graphe.m_arcs[i].getStart();
-				cout << '\t' << graphe.m_arcs[i].getFinish();
-				cout << '\t' << graphe.m_arcs[i].getDuree() << endl;
-			}
 
-			cout << endl;
-			cout << endl;
-			cout << endl;
+			/// on affiche le graph
+			graphe.show_graph();
 
 
 			/// Demande à l'utilisateur quel niveau il souhaite évaluer le graphe (condition switch)
@@ -177,7 +168,10 @@ int main()
 				case 3:
 					cout << "Niveau 3" << endl;
 					cout << endl;
+					
+					graph2 = contrainte.create_graph();
 
+					graph2.show_graph();
 					//Algo à effectuer au niveau 3
 					cout << endl;
 					cout << "Autre niveau?" << endl;

@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include <iostream>
+
 Graph::Graph()
 {
 	//ctor
@@ -41,6 +42,23 @@ void Graph::setArcs(vector <Arcs> arcs) {
 		m_arcs.push_back(arcVide);
 	}
 	m_arcs = arcs;
+}
+
+void Graph::show_graph() {
+	///Affichage du graphe (contenu du fichier)
+	//Optionnel
+	cout << '\t' << m_nbSommets << '\t' << '\t' << '\t' << "Nombre de sommets du graphe" << endl;
+	cout << '\t' << m_nbArcs << '\t' << '\t' << '\t' << "Nombre d'arcs du graphe" << endl;
+	for (int i = 0; i< m_nbArcs; i++)
+	{
+		cout << '\t' << m_arcs[i].getStart();
+		cout << '\t' << m_arcs[i].getFinish();
+		cout << '\t' << m_arcs[i].getDuree() << endl;
+	}
+
+	cout << endl;
+	cout << endl;
+	cout << endl;
 }
 
 void Graph::setMatriceAdjacence(vector <Arcs> arcs) {

@@ -1,8 +1,8 @@
+#pragma once
 #define GRAPH_H
 
 #include <vector>
 #include "Arcs.h"
-
 
 using namespace std;
 
@@ -19,6 +19,7 @@ public:
 	int getNbSorties();
 	void setArcs(std::vector <Arcs> arcs);
 	std::vector <Arcs> m_arcs;
+	void show_graph();
 	void setMatriceAdjacence(std::vector <Arcs> arcs);
 	void showMatriceAdjacence();
 	bool verifMaxUneEntree();

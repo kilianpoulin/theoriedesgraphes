@@ -116,16 +116,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arcs.cpp" />
+    <ClCompile Include="Contraintes.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arcs.h" />
+    <ClInclude Include="Contraintes.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="1.txt" />
+    <Text Include="CO1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
