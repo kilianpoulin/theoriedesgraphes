@@ -11,6 +11,7 @@ int main()
 	int niv = 0;    //Niveau que l'utilisateur sera amené à choisir
 	Graph graphe;
 	int nbSommets, nbArcs;
+	string tmp;
 	cout << "****** Projet de theorie des graphes ******" << endl << endl << endl;
 
 	cout << "Bonjour, veuillez choisir un graphe (nombre : 01 -> 122)" << endl;
@@ -115,6 +116,45 @@ int main()
 				case 2:
 					cout << "Niveau 2" << endl;
 					cout << endl;
+
+					/// on initialise les outils du niveau 1
+					graphe.setMatriceAdjacence(arcs);
+
+					cout << "Verifications " << endl;
+					cout << endl;
+
+					if (graphe.verifMaxUneEntree())
+						tmp = "Oui";
+					else
+						tmp = "Non";
+					cout << "Le graphe ne possede qu'une seule entree (max) : " << tmp << endl;
+						
+					if (graphe.verifMaxUneSortie())
+						tmp = "Oui";
+					else
+						tmp = "Non";
+					cout << "Le graphe ne possede qu'une seule sortie (max) : " <<  tmp << endl;
+
+					if (graphe.getNbEntrees() == 0)
+						tmp = "Non, il n'y a pas de point d'entree";
+					else if (graphe.getNbEntrees() > 1)
+						tmp = "Il y a plusieurs points d'entrees";
+					else if (graphe.verifAccessibleDepuisEntree())
+						tmp = "Oui";
+					else
+						tmp = "Non";
+					cout << "Tous les sommets sont accessibles de puis le point d'entree : " << tmp << endl;
+
+					if (graphe.getNbSorties() == 0)
+						tmp = "Non, il n'y a pas de point de sortie";
+					else if (graphe.getNbSorties() > 1)
+						tmp = "Il y a plusieurs points de sortie";
+					else if (graphe.verifAccessibleDepuisSortie())
+						tmp = "Oui";
+					else
+						tmp = "Non";
+					cout << "Le point de sortie est accessible depuis tous les autres sommets : " << tmp << endl;
+
 					//Algo à effectuer au niveau 2
 					cout << endl;
 					cout << "Autre niveau?" << endl;
@@ -125,6 +165,7 @@ int main()
 				case 3:
 					cout << "Niveau 3" << endl;
 					cout << endl;
+
 					//Algo à effectuer au niveau 3
 					cout << endl;
 					cout << "Autre niveau?" << endl;
