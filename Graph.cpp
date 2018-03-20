@@ -149,3 +149,27 @@ bool Graph::verifAccessibleDepuisSortie() {
 
 	return true;
 }
+
+bool Graph::verifValeursArcs() {
+	for (int i = 0; i < m_nbArcs; i++) {
+		if (m_arcs[i].getDuree() < 0)
+			return false;
+	}
+	return true;
+}
+
+bool Graph::verifMemeSommetMemeValeur() {
+	int tmp_val;
+	for (int s = 0; s < m_nbSommets; s++) {
+		tmp_val = NULL; // on initialise la valeur des arcs pour un sommet
+		for (int i = 0; i < m_nbArcs; i++) {
+			if (m_arcs[i].getStart() == s) {
+				if (tmp_val == NULL)
+					tmp_val = m_arcs[i].getDuree();
+				else if (m_arcs[i].getDuree() != tmp_val)
+					return false;
+			}
+		}
+	}
+	return true;
+}

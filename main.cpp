@@ -155,6 +155,18 @@ int main()
 						tmp = "Non";
 					cout << "Le point de sortie est accessible depuis tous les autres sommets : " << tmp << endl;
 
+					if (graphe.verifValeursArcs())
+						tmp = "Oui";
+					else
+						tmp = "Non";
+					cout << "Les valeurs des arcs sont positives ou nulles : " << tmp << endl;
+
+					if (graphe.verifMemeSommetMemeValeur())
+						tmp = "Oui";
+					else
+						tmp = "Non";
+					cout << "Tous les arcs sortant d'un meme sommet une meme valeur : " << tmp << endl;
+
 					//Algo à effectuer au niveau 2
 					cout << endl;
 					cout << "Autre niveau?" << endl;

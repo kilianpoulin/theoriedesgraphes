@@ -25,6 +25,8 @@ public:
 	bool verifMaxUneSortie();
 	bool verifAccessibleDepuisEntree();
 	bool verifAccessibleDepuisSortie();
+	bool verifValeursArcs();
+	bool verifMemeSommetMemeValeur();
 
 protected:
 
