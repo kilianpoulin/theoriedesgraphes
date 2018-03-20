@@ -52,7 +52,7 @@ void Graph::setMatriceAdjacence(vector <Arcs> arcs) {
 void Graph::showMatriceAdjacence() {
 	for (int i = 0; i < m_nbSommets; i++) {
 		for (int j = 0; j < m_nbSommets; j++) {
-			cout << m_matriceAdjacence[i][j];
+			cout << '\t' << m_matriceAdjacence[i][j];
 		}
 		cout << endl;
 	}

@@ -54,84 +54,101 @@ int main()
 			graphe.setArcs(arcs);
 			///Affichage du graphe (contenu du fichier)
 			//Optionnel
+			cout << '\t' << graphe.getNbSommets() << '\t' << '\t' << '\t' << "Nombre de sommets du graphe" << endl;
+			cout << '\t' << graphe.getNbArcs() << '\t' << '\t' << '\t' << "Nombre d'arcs du graphe" << endl;
 			for (int i = 0; i<graphe.getNbArcs(); i++)
 			{
-				cout << graphe.m_arcs[i].getStart();
-				cout << graphe.m_arcs[i].getFinish();
-				cout << graphe.m_arcs[i].getDuree() << endl;
+				cout << '\t' << graphe.m_arcs[i].getStart();
+				cout << '\t' << graphe.m_arcs[i].getFinish();
+				cout << '\t' << graphe.m_arcs[i].getDuree() << endl;
 			}
 
 			cout << endl;
 			cout << endl;
-			cout <<"bonjou"<< endl;
-
-			///Affichage de la Matrice d'adjacence
-			graphe.setMatriceAdjacence(arcs);
-			graphe.showMatriceAdjacence();
-
-		} /// fin lecture du fichier
-
-		  /// Demande à l'utilisateur quel niveau il souhaite évaluer le graphe (condition switch)
-		cout << "Niveau souhaite :" << endl;
-		cin >> niv;
+			cout << endl;
 
 
-		while (niv != -1)// Tant que l'on veut examiner les niveaux
-		{
-			switch (niv)
+			/// Demande à l'utilisateur quel niveau il souhaite évaluer le graphe (condition switch)
+			cout << "Niveau souhaite :" << endl;
+			cin >> niv;
+
+
+			while (niv != -1)// Tant que l'on veut examiner les niveaux
 			{
-			case 1: ///Niveau 1: Matrice d'adjacence, Matrice de Valeurs, Détection de circuit, Calcul de Rang
-				cout << "Niveau 1" << endl;
-				cout << endl;
-				//Algo à effectuer au niveau 1
+				switch (niv)
+				{
+				case 1: ///Niveau 1: Matrice d'adjacence, Matrice de Valeurs, Détection de circuit, Calcul de Rang
+					cout << "Niveau 1" << endl;
+					cout << endl;
+					//Algo à effectuer au niveau 1
 
-				/*Affichage de la Matrice d'adjacence
+					///Affichage de la Matrice d'adjacence
+					cout << "Affichage de la Matrice d'adjacence" << endl;
+					graphe.setMatriceAdjacence(arcs);
+					graphe.showMatriceAdjacence();
 
-				graphe.setMatriceAdjacence(arcs);
-				graphe.showMatriceAdjacence();*/
+					cout << endl;
 
-				cout << endl;
-				cout << "Autre niveau?" << endl;
-				cout << "-1 pour quitter" << endl;
-				cin >> niv;
-				cout << endl;
-				break;
-			case 2:
-				cout << "Niveau 2" << endl;
-				cout << endl;
-				//Algo à effectuer au niveau 2
-				cout << endl;
-				cout << "Autre niveau?" << endl;
-				cout << "-1 pour quitter" << endl;
-				cin >> niv;
-				cout << endl;
-				break;
-			case 3:
-				cout << "Niveau 3" << endl;
-				cout << endl;
-				//Algo à effectuer au niveau 3
-				cout << endl;
-				cout << "Autre niveau?" << endl;
-				cout << "-1 pour quitter" << endl;
-				cin >> niv;
-				cout << endl;
-				break;
-			case 4:
-				cout << "Niveau 4" << endl;
-				cout << endl;
-				//Algo à effectuer au niveau 4
-				cout << endl;
-				cout << "Autre niveau?" << endl;
-				cout << "-1 pour quitter" << endl;
-				cin >> niv;
-				cout << endl;
-				break;
-			default:
-				cout << "Niveau incorrect" << endl;
-				cin >> niv;
-				break;
+					cout << "Affichage de la Matrice de Valeurs" << endl;
+					/*Code
+					à
+					insérer*/
+					cout << endl;
+
+					cout << "Détection de circuits" << endl;
+					/*Code
+					à
+					insérer*/
+					cout << endl;
+
+					cout << "Calcul de Rangs" << endl;
+					/*Code
+					à
+					insérer*/
+					cout << endl;
+
+					cout << "Autre niveau?" << endl;
+					cout << "-1 pour quitter" << endl;
+					cin >> niv;
+					cout << endl;
+					break;
+				case 2:
+					cout << "Niveau 2" << endl;
+					cout << endl;
+					//Algo à effectuer au niveau 2
+					cout << endl;
+					cout << "Autre niveau?" << endl;
+					cout << "-1 pour quitter" << endl;
+					cin >> niv;
+					cout << endl;
+					break;
+				case 3:
+					cout << "Niveau 3" << endl;
+					cout << endl;
+					//Algo à effectuer au niveau 3
+					cout << endl;
+					cout << "Autre niveau?" << endl;
+					cout << "-1 pour quitter" << endl;
+					cin >> niv;
+					cout << endl;
+					break;
+				case 4:
+					cout << "Niveau 4" << endl;
+					cout << endl;
+					//Algo à effectuer au niveau 4
+					cout << endl;
+					cout << "Autre niveau?" << endl;
+					cout << "-1 pour quitter" << endl;
+					cin >> niv;
+					cout << endl;
+					break;
+				default:
+					cout << "Niveau incorrect" << endl;
+					cin >> niv;
+					break;
+				}
 			}
-		}
+		} /// fin lecture du fichier
 		file = "";
 		cout << "Bonjour, veuillez choisir un graphe (nombre : 01 -> 122)" << endl;
 		cout << "graphe : ";
