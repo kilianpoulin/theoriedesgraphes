@@ -1,6 +1,8 @@
 #ifndef MAIN_H_INCLUDED
 #define MAIN_H_INCLUDED
 
+using namespace std;
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,6 +12,7 @@
 #include "Contraintes.h"
 #include "Arcs.h"
 #include "Graph.h"
+#include "Source.h"
 
 
 

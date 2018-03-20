@@ -18,9 +18,8 @@ public:
 	int getNbEntrees();
 	int getNbSorties();
 	void setArcs(std::vector <Arcs> arcs);
-	std::vector <Arcs> m_arcs;
 	void show_graph();
-	void setMatriceAdjacence(std::vector <Arcs> arcs);
+	void setMatriceAdjacence();
 	void showMatriceAdjacence();
 	bool verifMaxUneEntree();
 	bool verifMaxUneSortie();
@@ -38,6 +37,7 @@ private:
 	int m_nbSorties;
 	int m_pointEntree;
 	int m_pointSortie;
+	std::vector <Arcs> m_arcs;
 	std::vector< vector<bool> > m_matriceAdjacence;
 
 };

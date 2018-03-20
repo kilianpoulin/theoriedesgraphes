@@ -61,7 +61,7 @@ void Graph::show_graph() {
 	cout << endl;
 }
 
-void Graph::setMatriceAdjacence(vector <Arcs> arcs) {
+void Graph::setMatriceAdjacence() {
 	/**
 	* Generate the adjustment matrix with the transition arcs.
 	*/
