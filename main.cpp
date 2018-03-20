@@ -63,7 +63,7 @@ int main()
 
 			cout << endl;
 			cout << endl;
-			cout << endl;
+			cout <<"bonjou"<< endl;
 
 			///Affichage de la Matrice d'adjacence
 			graphe.setMatriceAdjacence(arcs);
