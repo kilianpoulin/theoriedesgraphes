@@ -117,7 +117,7 @@ int main()
 				tmp = "Oui";
 			else
 				tmp = "Non";
-			cout << "Tous les arcs sortant d'un meme sommet une meme valeur : " << tmp << endl;
+			cout << "Tous les arcs sortant d'un meme sommet ont une meme valeur : " << tmp << endl;
 
 			cout << endl;
 			break;
