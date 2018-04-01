@@ -48,15 +48,11 @@ int main()
 			cout << endl;
 
 			cout << "Détection de circuits" << endl;
-			/*Code
-			à
-			insérer*/
+			graphe.circuitDetection();
 			cout << endl;
 
 			cout << "Calcul de Rangs" << endl;
-			/*Code
-			à
-			insérer*/
+			graphe.showRang();
 			cout << endl;
 			break;
 		case 2:
