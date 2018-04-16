@@ -47,7 +47,7 @@ int main()
 			insérer*/
 			cout << endl;
 
-			cout << "Détection de circuits" << endl;
+			cout << "Detection de circuits" << endl;
 			graphe.circuitDetection();
 			cout << endl;
 
