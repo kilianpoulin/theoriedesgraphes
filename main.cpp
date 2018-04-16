@@ -54,15 +54,6 @@ int main()
 			cout << "Calcul de Rangs" << endl;
 			graphe.showRang();
 
-
-			cout << "Calcul des dates au plus tot : " << endl;
-			//graphe.detectionRang();
-			graphe.calcDatePlusTot();
-			graphe.showDatePlusTot();
-
-			cout << "Calcul des dates au plus tard : " << endl;
-			graphe.calcDatePlusTard();
-			graphe.showDatePlusTard();
 			cout << endl;
 			break;
 		case 2:
@@ -126,6 +117,17 @@ int main()
 				tmp = "Non";
 			cout << "Tous les arcs sortant d'un meme sommet ont une meme valeur : " << tmp << endl;
 
+
+
+			cout << "Calcul des calendriers et marges : " << endl;
+			graphe.circuitDetection();
+			graphe.calcDatePlusTot();
+			graphe.calcDatePlusTard();
+			graphe.calcMargeTotale();
+
+			graphe.calcDatePlusTard();
+
+			graphe.showCalendrier();
 			cout << endl;
 			break;
 		case 3:

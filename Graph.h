@@ -34,15 +34,17 @@ public:
 	bool MatrAdjEqualstoZero();
 	void showRang();
 	int getMaxDureeAntecedent(int sommet);
-	void showDatePlusTot();
+	void showCalendrier();
 	void calcDatePlusTot();
 	void initializeDatePlusTot();
-	void showDatePlusTard();
 	void calcDatePlusTard();
 	void initializeDatePlusTard();
-	int getMaxDureeAntecedentTard(int sommet, int rang);
 	int TardFinal(int var_tmp, int sommet, int rang);
 	int TardTemp(int sommet, int rang);
+	void calcMargeTotale();
+	void initializeMargeTotale();
+	void initializeMargeLibre();
+	void calcMargeLibre();
 
 protected:
 
@@ -63,6 +65,8 @@ private:
 	int m_tmp_rang = 1;
 	std::vector<vector<int>>m_date_plus_tot;
 	std::vector<vector<int>>m_date_plus_tard;
+	std::vector<vector<int>>m_marge_totale;
+	std::vector<vector<int>>m_marge_libre;
 	int m_var = 0;
 	int m_var_tmp = 0;
 	int m_duree = 0;

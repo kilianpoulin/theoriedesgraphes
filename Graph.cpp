@@ -355,14 +355,17 @@ void Graph::calcDatePlusTot() {
 
 }
 
-void Graph::showDatePlusTot() {
-	cout << "  Rang  " << "  Sommet  " << "  D+tot  " << endl;
+void Graph::showCalendrier() {
+	cout << '\t' << "Rang" << '\t' << "Sommet" << '\t' << "D+tot" << '\t' << "D+tard" << '\t' 
+		<< "Marge Totale" << '\t' << "Marge Libre" << endl;
 	for (int i = 0; i < m_date_plus_tot.size(); i++) {
 		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
 			// on affiche le rang, le sommet et sa date au plus tôt
-			cout << "   " << i + 1 << "   " << "    " << m_rang[i][j] << "    " <<
-				"    " << m_date_plus_tot[i][j] << endl;
+			cout << '\t' << i + 1 << '\t' << m_rang[i][j] << '\t' << m_date_plus_tot[i][j] <<
+				'\t' << m_date_plus_tard[i][j] << '\t' << m_marge_totale[i][j] << 
+				'\t' << endl;
 		}
+		cout << '\t' << "---------------------------------" << endl;
 	}
 
 }
@@ -444,16 +447,38 @@ void Graph::calcDatePlusTard() {
 	}
 }
 
-
-void Graph::showDatePlusTard() {
-	cout << "  Rang  " << "  Sommet  " << "  D+tard  " << endl;
-	for (int i = 0; i < m_date_plus_tard.size(); i++) {
-		for (int j = 0; j < m_date_plus_tard[i].size(); j++) {
-			// on affiche le rang, le sommet et sa date au plus tôt
-			cout << "   " << i + 1 << "   " << "    " << m_rang[i][j] << "    " <<
-				"    " << m_date_plus_tard[i][j] << endl;
+void Graph::initializeMargeTotale() {
+	int j = 0;
+	for (int i = 0; i < m_tmp_rang - 1; i++) {
+		for (j = 1; j< m_rang[i].size() - 1; j++) {
 		}
+		m_marge_totale.push_back(vector<int>(j, 0));
+	}
+}
+
+void Graph::calcMargeTotale() {
+	initializeMargeTotale();
+	for (int i = 0; i < m_date_plus_tot.size(); i++) {
+		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
+			m_marge_totale[i][j] = m_date_plus_tard[i][j] - m_date_plus_tot[i][j];
+		}
+	}
+}
+
+void Graph::initializeMargeLibre() {
+	int j = 0;
+	for (int i = 0; i < m_tmp_rang - 1; i++) {
+		for (j = 1; j< m_rang[i].size() - 1; j++) {
+		}
+		m_marge_libre.push_back(vector<int>(j, 0));
 	}
 
 }
-
+void Graph::calcMargeLibre() {
+	initializeMargeLibre();
+	for (int i = 0; i < m_date_plus_tot.size(); i++) {
+		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
+			m_marge_libre[i][j] = m_date_plus_tard[i][j] - m_date_plus_tot[i][j];
+		}
+	}
+}
