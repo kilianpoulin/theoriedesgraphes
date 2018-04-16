@@ -53,6 +53,16 @@ int main()
 
 			cout << "Calcul de Rangs" << endl;
 			graphe.showRang();
+
+
+			cout << "Calcul des dates au plus tot : " << endl;
+			//graphe.detectionRang();
+			graphe.calcDatePlusTot();
+			graphe.showDatePlusTot();
+
+			cout << "Calcul des dates au plus tard : " << endl;
+			graphe.calcDatePlusTard();
+			graphe.showDatePlusTard();
 			cout << endl;
 			break;
 		case 2:
@@ -67,6 +77,7 @@ int main()
 
 			/// on initialise les outils du niveau 1
 			graphe.setMatriceAdjacence();
+
 
 			cout << "Verifications " << endl;
 			cout << endl;

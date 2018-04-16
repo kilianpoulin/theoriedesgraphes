@@ -33,6 +33,16 @@ public:
 	void circuitDetection();
 	bool MatrAdjEqualstoZero();
 	void showRang();
+	int getMaxDureeAntecedent(int sommet);
+	void showDatePlusTot();
+	void calcDatePlusTot();
+	void initializeDatePlusTot();
+	void showDatePlusTard();
+	void calcDatePlusTard();
+	void initializeDatePlusTard();
+	int getMaxDureeAntecedentTard(int sommet, int rang);
+	int TardFinal(int var_tmp, int sommet, int rang);
+	int TardTemp(int sommet, int rang);
 
 protected:
 
@@ -51,6 +61,13 @@ private:
 	bool m_circuit;
 	std::vector<int> m_entrees;
 	int m_tmp_rang = 1;
+	std::vector<vector<int>>m_date_plus_tot;
+	std::vector<vector<int>>m_date_plus_tard;
+	int m_var = 0;
+	int m_var_tmp = 0;
+	int m_duree = 0;
+	std::vector<int>m_vars;
+	bool m_rollback = false;
 
 };
 

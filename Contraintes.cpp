@@ -11,7 +11,6 @@ Contraintes::~Contraintes()
 
 
 Graph Contraintes::create_graph() {
-	
 	int nbSommets, nbArcs = 0;
 	int start, finish, tmp;
 	string line;
@@ -27,17 +26,17 @@ Graph Contraintes::create_graph() {
 	string file;
 	cin >> file;                          //L'utilisateur doit rentrer un nombre allant de 01 à 122
 
-	if(file != "-1") {
+	if (file != "-1") {
 		file2 += file;
 		file2 += ".txt";                     //on ajoute le .txt
-		//cout << endl;                   //file stock -> racine du fichier
+											 //cout << endl;                   //file stock -> racine du fichier
 		ifstream fichier(file2.c_str());     //ifstream -> accès en lecture du fichier
 
 		if (fichier) {
 
 			fichier >> nbSommets; /// on stocke les 2 premiers caractères dans ces 3 variables
 
-											/// puis on les enregistre dans la structure graphe
+								  /// puis on les enregistre dans la structure graphe
 			graphe.setNbSommets(nbSommets);
 
 			vector <int> duree;
@@ -45,43 +44,43 @@ Graph Contraintes::create_graph() {
 				fichier >> tmp >> tmp;
 				duree.push_back(tmp);
 			}
-			
+
 			/// On stocke toutes les transitions
-					while (getline(fichier, line)) {
-						stringstream ss(line);
+			while (getline(fichier, line)) {
+				stringstream ss(line);
 
-						count = 0;
-						// extract all words from line
-						while (ss >> word) {
-							
-							if (count == 0) {
-								start = NULL;
-								/// le sommet de départ
-								tmp_arc.setStart(word);
-								start = word;
+				count = 0;
+				// extract all words from line
+				while (ss >> word) {
 
-							}
-							else {
-								tmp_arc.setFinish(word);   /// le sommet d'arrivée
+					if (count == 0) {
+						start = NULL;
+						/// le sommet de départ
+						tmp_arc.setStart(word);
+						start = word;
 
-								tmp_arc.setDuree(duree[start - 1]); /// la durée de l'arc
-
-								if(tmp_arc.getFinish() != 0)
-									arcs.push_back(tmp_arc);
-
-								cout << endl; 
-								cout << endl;
-							}
-							count++;
-						}
-						
 					}
-			}
+					else {
+						tmp_arc.setFinish(word);   /// le sommet d'arrivée
 
-			/// On met les résultats dans l'objet graphe
-			graphe.setNbArcs(arcs.size());
-			graphe.setArcs(arcs);
+						tmp_arc.setDuree(duree[start - 1]); /// la durée de l'arc
+
+						if (tmp_arc.getFinish() != 0)
+							arcs.push_back(tmp_arc);
+
+						cout << endl;
+						cout << endl;
+					}
+					count++;
+				}
+
+			}
 		}
+
+		/// On met les résultats dans l'objet graphe
+		graphe.setNbArcs(arcs.size());
+		graphe.setArcs(arcs);
+	}
 
 	return graphe;
 }
