@@ -49,7 +49,7 @@ void Graph::show_graph() {
 	//Optionnel
 	cout << '\t' << m_nbSommets << '\t' << '\t' << '\t' << "Nombre de sommets du graphe" << endl;
 	cout << '\t' << m_nbArcs << '\t' << '\t' << '\t' << "Nombre d'arcs du graphe" << endl;
-	for (int i = 0; i< m_nbArcs; i++)
+	for (int i = 0; i< m_nbArcs - 1; i++)
 	{
 		cout << '\t' << m_arcs[i].getStart();
 		cout << '\t' << m_arcs[i].getFinish();
@@ -70,7 +70,7 @@ void Graph::setMatriceAdjacence() {
 		m_matriceAdjacence.push_back(vector<bool>(m_nbSommets, false));
 	}
 
-	for (int i = 0; i < m_nbArcs; i++) {
+	for (int i = 0; i < m_nbArcs - 1; i++) {
 		m_matriceAdjacence[m_arcs[i].getStart()][m_arcs[i].getFinish()] = true;
 	}
 }
@@ -179,7 +179,7 @@ bool Graph::verifAccessibleDepuisSortie() {
 }
 
 bool Graph::verifValeursArcs() {
-	for (int i = 0; i < m_nbArcs; i++) {
+	for (int i = 0; i < m_nbArcs - 1; i++) {
 		if (m_arcs[i].getDuree() < 0)
 			return false;
 	}
@@ -381,11 +381,6 @@ int Graph::TardTemp(int sommet, int rang) {
 	for (int s = 0; s < m_rang[rang + 1].size() - 1; s++) { // on regarde tous les sommets appartenant au rang superieur
 		for (int i = 0; i < m_arcs.size(); i++) { // on regarde s'il y a un arc existant entre le sommet actuel et l'un du rang superieur
 			if (m_arcs[i].getStart() == sommet && m_arcs[i].getFinish() == m_rang[rang + 1][s]) {
-				if (sommet == 13) {
-					cout << "19 " << "start = " << m_arcs[19].getStart() << " end = " << m_arcs[19].getFinish() << endl;
-					cout << "20 " << "start = " << m_arcs[20].getStart() << " end = " << m_arcs[20].getFinish() << endl;
-					cout << "the sommet pb = " << m_rang[rang + 1][s] << endl;
-				}
 				count++;
 			}
 				
@@ -400,7 +395,6 @@ int Graph::TardFinal(int var_tmp, int sommet, int rang) {
 	int count = 0;
 	bool test = false;
 	if (rang + 1 > (m_tmp_rang - 2)) {
-		cout << "voila" << endl;
 		m_var = 0;
 		m_rollback = true;
 		return 0;
@@ -415,16 +409,11 @@ int Graph::TardFinal(int var_tmp, int sommet, int rang) {
 					m_rollback = false;
 				}
 				if (TardTemp(sommet, rang) > 1) {
-					cout << "enreg tmp " << endl;
 					var_tmp = m_var;
 				}
 
-				cout << "start = " << m_arcs[i].getStart() << " end = " << m_arcs[i].getFinish();
-				cout << " duree = " << m_duree;
 				if ((m_var + m_arcs[i].getDuree()) > m_duree)
 					m_duree = m_var + m_arcs[i].getDuree();
-				cout << " m_var = " << m_var;
-				cout << " m_var_tmp = " << var_tmp << endl;
 				m_var += m_arcs[i].getDuree();
 				m_var += TardFinal(var_tmp, m_arcs[i].getFinish(), rang + 1);
 				
@@ -436,67 +425,23 @@ int Graph::TardFinal(int var_tmp, int sommet, int rang) {
 			}
 		}
 	}
-	/*if (tmp > 0) {
-		cout << "oui" << endl;
-		return duree;
-	}*/
-	cout << "duree = " << m_duree << endl;
-		//return m_var + TardFinal(m_arcs[i_tmp].getFinish(), rang + 1);
 	if(tmp == 0)
 		return tmp + TardFinal(var_tmp, sommet, rang + 1);
 
 }
 
-int Graph::getMaxDureeAntecedentTard(int sommet, int rang) {
-	int tmp = 0;
-	int i_tmp = 0;
-	int var_tmp = 0;
-	cout << "(" << sommet << "," << rang << ")" << endl;
-	if (rang + 1 > (m_tmp_rang - 1))
-		return 0;
-	for (int s = 0; s < m_rang[rang + 1].size() - 1; s++) { // on regarde tous les sommets appartenant au rang superieur
-		for (int i = 0; i < m_arcs.size(); i++) { // on regarde s'il y a un arc existant entre le sommet actuel et l'un du rang inférieur
-			if (m_arcs[i].getStart() == sommet && m_arcs[i].getFinish() == m_rang[rang + 1][s]) {
-				var_tmp = getMaxDureeAntecedentTard(m_arcs[i].getFinish(), rang + 1);
-				m_var = m_arcs[i].getDuree() + var_tmp;
-				if (m_var >= tmp) {
-					tmp = m_arcs[i].getDuree();
-					i_tmp = i;
-				}
-						
-			}
-		}
-	}
-	//if (tmp > 0) {
-		//return tmp + getMaxDureeAntecedentTard(m_arcs[i_tmp].getFinish(), rang + 1);
-	if (tmp > 0) {
-		cout << "var = " << m_var << endl;
-		cout << "------------------------" << endl;
-		return m_var;
-	}
-	else 
-		return tmp + getMaxDureeAntecedentTard(sommet, rang + 1);
-	//}
-	//else
-		//return tmp + getMaxDureeAntecedentTard(sommet, rang + 1);
-}
-
 void Graph::calcDatePlusTard() {
 	// on initialise le vecteur date au plus tot
 	initializeDatePlusTard();
-	m_var_tmp = 0;
-	TardFinal(0, m_rang[1][1], 1);
-	m_date_plus_tard[1][1] = m_date_plus_tot[m_tmp_rang - 2][0] - m_duree;
-	m_var = 0;
-	//for (int i = m_tmp_rang - 1; i > 0; i--) {
-		//for (int j = 0; j < m_rang[i].size() - 1; j++) {
-			// on recherche la duree la plus grande entre l'état et ses antécédents
-			//m_date_plus_tard[i][j] = getMaxDureeAntecedentTard(m_rang[i][j], i);
-			
-		//m_date_plus_tard[i][j] = m_date_plus_tot[m_tmp_rang - 2][0] - getMaxDureeAntecedentTard(m_rang[i][j], i);
-		//}
-	//}
-
+	for (int i = m_tmp_rang - 1; i > -1; i--) {
+		for (int j = 0; j < m_rang[i].size() - 1; j++) {
+			m_var_tmp = 0;
+			TardFinal(0, m_rang[i][j], i);
+			m_date_plus_tard[i][j] = m_date_plus_tot[m_tmp_rang - 2][0] - m_duree;
+			m_var = 0;
+			m_duree = 0;
+		}
+	}
 }
 
 
