@@ -26,7 +26,7 @@ Graph create_graph()
 
 		/// On stocke toutes les transitions
 		vector <Arcs> arcs(nbArcs);
-		for (int i = 0; i < nbArcs - 1; i++) {
+		for (int i = 0; i < nbArcs; i++) {
 			fichier >> start;                   /// le sommet de départ
 			arcs[i].setStart(start);
 

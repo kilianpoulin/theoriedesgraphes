@@ -116,14 +116,15 @@ int main()
 			else
 				tmp = "Non";
 			cout << "Tous les arcs sortant d'un meme sommet ont une meme valeur : " << tmp << endl;
-
+			
 
 
 			cout << "Calcul des calendriers et marges : " << endl;
-			graphe.circuitDetection();
-			graphe.calcDatePlusTot();
-			graphe.calcDatePlusTard();
-			graphe.calcMargeTotale();
+			graphe.circuitDetection(); 
+			graphe.calcDatePlusTot(); ;
+			graphe.calcDatePlusTard(); 
+			graphe.calcMargeTotale(); 
+			graphe.calcMargeLibre();
 
 			graphe.calcDatePlusTard();
 

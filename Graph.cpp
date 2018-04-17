@@ -49,7 +49,7 @@ void Graph::show_graph() {
 	//Optionnel
 	cout << '\t' << m_nbSommets << '\t' << '\t' << '\t' << "Nombre de sommets du graphe" << endl;
 	cout << '\t' << m_nbArcs << '\t' << '\t' << '\t' << "Nombre d'arcs du graphe" << endl;
-	for (int i = 0; i< m_nbArcs - 1; i++)
+	for (int i = 0; i< m_nbArcs; i++)
 	{
 		cout << '\t' << m_arcs[i].getStart();
 		cout << '\t' << m_arcs[i].getFinish();
@@ -70,7 +70,7 @@ void Graph::setMatriceAdjacence() {
 		m_matriceAdjacence.push_back(vector<bool>(m_nbSommets, false));
 	}
 
-	for (int i = 0; i < m_nbArcs - 1; i++) {
+	for (int i = 0; i < m_nbArcs; i++) {
 		m_matriceAdjacence[m_arcs[i].getStart()][m_arcs[i].getFinish()] = true;
 	}
 }
@@ -363,9 +363,9 @@ void Graph::showCalendrier() {
 			// on affiche le rang, le sommet et sa date au plus tôt
 			cout << '\t' << i + 1 << '\t' << m_rang[i][j] << '\t' << m_date_plus_tot[i][j] <<
 				'\t' << m_date_plus_tard[i][j] << '\t' << m_marge_totale[i][j] << 
-				'\t' << endl;
+				'\t' << m_marge_libre[i][j] << endl;
 		}
-		cout << '\t' << "---------------------------------" << endl;
+		cout << '\t' << "--------------------------------------------------------" << endl;
 	}
 
 }
@@ -397,12 +397,12 @@ int Graph::TardFinal(int var_tmp, int sommet, int rang) {
 	int i_tmp = 0;
 	int count = 0;
 	bool test = false;
+
 	if (rang + 1 > (m_tmp_rang - 2)) {
 		m_var = 0;
 		m_rollback = true;
 		return 0;
 	}
-		
 	for (int s = 0; s < m_rang[rang + 1].size() - 1; s++) { // on regarde tous les sommets appartenant au rang superieur
 		for (int i = 0; i < m_arcs.size(); i++) { // on regarde s'il y a un arc existant entre le sommet actuel et l'un du rang superieur
 			if (m_arcs[i].getStart() == sommet && m_arcs[i].getFinish() == m_rang[rang + 1][s]) {
@@ -439,7 +439,9 @@ void Graph::calcDatePlusTard() {
 	for (int i = m_tmp_rang - 1; i > -1; i--) {
 		for (int j = 0; j < m_rang[i].size() - 1; j++) {
 			m_var_tmp = 0;
+
 			TardFinal(0, m_rang[i][j], i);
+
 			m_date_plus_tard[i][j] = m_date_plus_tot[m_tmp_rang - 2][0] - m_duree;
 			m_var = 0;
 			m_duree = 0;

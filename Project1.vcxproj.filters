@@ -53,5 +53,7 @@
     <Text Include="CO1.txt" />
     <Text Include="2.txt" />
     <Text Include="3.txt" />
+    <Text Include="10.txt" />
+    <Text Include="5.txt" />
   </ItemGroup>
 </Project>
