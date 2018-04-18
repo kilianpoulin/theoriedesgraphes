@@ -1,6 +1,8 @@
 #pragma once
 #define GRAPH_H
 
+#include <string>
+#include <iostream>
 #include <vector>
 #include "Arcs.h"
 
@@ -45,6 +47,10 @@ public:
 	void initializeMargeTotale();
 	void initializeMargeLibre();
 	void calcMargeLibre();
+	bool showVerifications();
+	char erreur(std::string tmp);
+	std::string create_line(int size, int max_size);
+	std::string create_space(int size);
 
 protected:
 

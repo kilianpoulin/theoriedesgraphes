@@ -69,66 +69,25 @@ int main()
 			/// on initialise les outils du niveau 1
 			graphe.setMatriceAdjacence();
 
+			if (graphe.showVerifications()) {
+				cout << "Calcul des calendriers et marges : " << endl;
+				graphe.circuitDetection();
+				graphe.calcDatePlusTot(); ;
+				graphe.calcDatePlusTard();
+				graphe.calcMargeTotale();
+				graphe.calcMargeLibre();
 
-			cout << "Verifications " << endl;
-			cout << endl;
+				graphe.calcDatePlusTard();
 
-			if (graphe.verifMaxUneEntree())
-				tmp = "Oui";
-			else
-				tmp = "Non";
-			cout << "Le graphe ne possede qu'une seule entree (max) : " << tmp << endl;
-						
-			if (graphe.verifMaxUneSortie())
-				tmp = "Oui";
-			else
-				tmp = "Non";
-			cout << "Le graphe ne possede qu'une seule sortie (max) : " <<  tmp << endl;
+				graphe.showCalendrier();
+			}
+			else {
+				cout << '\t' << "Toutes les proprietes necessaire du graphe ne sont pas presentes (voir ci-dessus)" << endl << endl;
+				cout << '\t' << "Le calcul du rang, des calendriers et des marges n'est pas possible" << endl;
+			}
 
-			if (graphe.getNbEntrees() == 0)
-				tmp = "Non, il n'y a pas de point d'entree";
-			else if (graphe.getNbEntrees() > 1)
-				tmp = "Il y a plusieurs points d'entrees";
-			else if (graphe.verifAccessibleDepuisEntree())
-				tmp = "Oui";
-			else
-				tmp = "Non";
-			cout << "Tous les sommets sont accessibles de puis le point d'entree : " << tmp << endl;
 
-			if (graphe.getNbSorties() == 0)
-				tmp = "Non, il n'y a pas de point de sortie";
-			else if (graphe.getNbSorties() > 1)
-				tmp = "Il y a plusieurs points de sortie";
-			else if (graphe.verifAccessibleDepuisSortie())
-				tmp = "Oui";
-			else
-				tmp = "Non";
-			cout << "Le point de sortie est accessible depuis tous les autres sommets : " << tmp << endl;
-
-			if (graphe.verifValeursArcs())
-				tmp = "Oui";
-			else
-				tmp = "Non";
-			cout << "Les valeurs des arcs sont positives ou nulles : " << tmp << endl;
-
-			if (graphe.verifMemeSommetMemeValeur())
-				tmp = "Oui";
-			else
-				tmp = "Non";
-			cout << "Tous les arcs sortant d'un meme sommet ont une meme valeur : " << tmp << endl;
 			
-
-
-			cout << "Calcul des calendriers et marges : " << endl;
-			graphe.circuitDetection(); 
-			graphe.calcDatePlusTot(); ;
-			graphe.calcDatePlusTard(); 
-			graphe.calcMargeTotale(); 
-			graphe.calcMargeLibre();
-
-			graphe.calcDatePlusTard();
-
-			graphe.showCalendrier();
 			cout << endl;
 			break;
 		case 3:

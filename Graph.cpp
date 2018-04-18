@@ -485,3 +485,138 @@ void Graph::calcMargeLibre() {
 		}
 	}
 }
+
+char Graph::erreur(string tmp) {
+	if (tmp == "Oui")
+		return 'O';
+	else
+		return 'X';
+}
+
+string Graph::create_line(int size, int max_size) {
+	string line = "";
+	max_size += 9; // on inclut la tabulation
+	for (int i = 0; i < size; i++) {
+		if (i == 0 || i == max_size || i == (max_size + 16) || i == (max_size + 32))
+			line += "+";
+		else
+			line += "-";
+	}
+	return line;
+}
+
+string Graph::create_space(int size) {
+	string space = " ";
+	for (int i = 0; i < size; i++) {
+		space += " ";
+	}
+	return space;
+}
+
+bool Graph::showVerifications() {
+	string tmp = "";
+	bool result = true;
+	int max_size = 0;
+	cout << '\t' << "Verifications " << endl;
+	cout << endl;
+
+	string conditions[10];
+	conditions[0] = "Le graphe ne possede qu'une seule entree (max)";
+	conditions[1] = "Le graphe ne possede qu'une seule sortie (max)";
+	conditions[2] = "Tous les sommets sont accessibles depuis le point d'entree";
+	conditions[3] = "Le point de sortie est accessible depuis tous les autres sommets";
+	conditions[4] = "Les valeurs des arcs sont positives ou nulles";
+	conditions[5] = "Tous les arcs sortant d'un meme sommet ont une meme valeur";
+
+	for (int i = 0; i < 6; i++) {
+		if (conditions[i].length() > max_size)
+			max_size = conditions[i].length();
+	}
+
+	cout << '\t' << create_space((max_size - 4) / 2) << "Condition" << create_space((max_size - 4) / 2) << "\t" <<
+		" | "  << create_space(2) << "Resultat" << create_space(2) << "|" 
+		<< create_space(1) << "Continuer ?" << create_space(1) << "| " << endl;
+
+
+	cout << '\t' << create_line(max_size + 5 * 8 + 2, max_size) << endl;
+
+		if (verifMaxUneEntree()) 
+			tmp = "Oui";
+		else {
+			tmp = "Non";
+			result = false;
+		}
+	cout << '\t' << conditions[0] << create_space(max_size - conditions[0].length()) << '\t' 
+		<< " | " << '\t' << tmp << '\t' 
+		<< " | " << create_space(5) << erreur(tmp) << create_space(5) << " |" << endl;
+
+	cout << '\t' << create_line(max_size + 5 * 8 + 2, max_size) << endl;
+	
+		if (verifMaxUneSortie())
+			tmp = "Oui";
+		else {
+			tmp = "Non";
+			result = false;
+		}
+	
+	cout << '\t' << conditions[1] << create_space(max_size - conditions[1].length()) << '\t'
+		<< " | " << '\t' << tmp << '\t'
+		<< " | " << create_space(5) << erreur(tmp) << create_space(5) << " |" << endl;
+
+	cout << '\t' << create_line(max_size + 5 * 8 + 2, max_size) << endl;
+
+		if(verifAccessibleDepuisEntree())
+			tmp = "Oui";
+		else {
+			tmp = "Non";
+			result = false;
+		}
+	cout << '\t' <<  conditions[2] << create_space(max_size - conditions[2].length()) << '\t'
+		<< " | " << '\t' << tmp << '\t'
+		<< " | " << create_space(5) << erreur(tmp) << create_space(5) << " |" << endl;
+
+	cout << '\t' << create_line(max_size + 5 * 8 + 2, max_size) << endl;
+
+		if (verifAccessibleDepuisSortie())
+			tmp = "Oui";
+		else {
+			tmp = "Non";
+			result = false;
+		}
+
+	cout << '\t' << conditions[3] << create_space(max_size - conditions[3].length()) << '\t'
+		<< " | " << '\t' << tmp << '\t' 
+		<< " | " << create_space(5) << erreur(tmp) << create_space(5) << " |" << endl;
+
+	cout << '\t' << create_line(max_size + 5 * 8 + 2, max_size) << endl;
+
+		if (verifValeursArcs())
+			tmp = "Oui";
+		else {
+			tmp = "Non";
+			result = false;
+		}
+
+	cout << '\t' << conditions[4] << create_space(max_size - conditions[4].length()) << '\t'
+		<< " | " << '\t' << tmp << '\t'
+		<< " | " << create_space(5) << erreur(tmp) << create_space(5) << " |" << endl;
+
+	cout << '\t' << create_line(max_size + 5 * 8 + 2, max_size) << endl;
+
+		if (verifMemeSommetMemeValeur())
+			tmp = "Oui";
+		else {
+			tmp = "Non";
+			result = false;
+		}
+	cout << '\t' << conditions[5] << create_space(max_size - conditions[5].length()) << '\t'
+		<< " | " << '\t' << tmp << '\t'
+		<< " | " << create_space(5) << erreur(tmp) << create_space(5) << " |" << endl;
+
+	cout << '\t' << create_line(max_size + 5 * 8 + 2, max_size) << endl;
+
+	cout << endl;
+
+	return result;
+
+}
