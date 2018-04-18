@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <iostream>
 
+// Toutes les fonctions des graph
 Graph::Graph()
 {
 	//ctor
