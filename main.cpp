@@ -76,10 +76,25 @@ int main()
 
 			/// on initialise les outils du niveau 1
 			graphe.setMatriceAdjacence();
+			cout << endl;
+
+			cout << "  => Detection de circuits" << endl << endl;
+
+			graphe.circuitDetection();
+			cout << endl;
+
+			cout << "  => Suivi de la detection et de l'elimination des sommets" << endl << endl;
+			graphe.showAntecedents();
+			cout << endl;
+
+			cout << "  => Calcul de Rangs" << endl << endl;
+			graphe.showRang();
 
 			if (graphe.showVerifications()) {
-				cout << "Calcul des calendriers et marges : " << endl;
-				graphe.circuitDetection();
+				cout << endl;
+
+				cout << "Calcul des calendriers et marges : " << endl << endl;
+
 				graphe.calcDatePlusTot(); ;
 				graphe.calcDatePlusTard();
 				graphe.calcMargeTotale();
@@ -93,8 +108,6 @@ int main()
 				cout << '\t' << "Toutes les proprietes necessaire du graphe ne sont pas presentes (voir ci-dessus)" << endl << endl;
 				cout << '\t' << "Le calcul du rang, des calendriers et des marges n'est pas possible" << endl;
 			}
-
-
 			
 			cout << endl;
 			break;
