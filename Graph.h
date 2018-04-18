@@ -23,6 +23,8 @@ public:
 	void show_graph();
 	void setMatriceAdjacence();
 	void showMatriceAdjacence();
+    void setMatriceIncidence();
+    void showMatriceIncidence();
 	void showMatriceAdjacence2();
 	bool verifMaxUneEntree();
 	bool verifMaxUneSortie();
@@ -63,6 +65,7 @@ private:
 	int m_pointSortie;
 	std::vector <Arcs> m_arcs;
 	std::vector< vector<bool> > m_matriceAdjacence;
+    std::vector< vector<int> > m_matriceIncidence;
 	std::vector<vector<bool>> m_adj2;	//Copie de la Matrice d'adjacence sur laquelle on va appliquer la détéction de circuit par suppression d'état
 	std::vector<int> m_tmp;	//vector qui stock le nombre d'états entrant dans un état i (i, index du vector)
 	std::vector<vector<int>> m_rang;

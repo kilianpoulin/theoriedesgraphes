@@ -41,10 +41,10 @@ int main()
 
 			cout << endl;
 
-			cout << '\t' << "Affichage de la Matrice de Valeurs" << endl << endl;
-			/*Code
-			à
-			insérer*/
+			cout << "Affichage de la Matrice de Valeurs" << endl;
+			cout << "Affichage de la Matrice de Valeurs" << endl;
+			graphe.setMatriceIncidence();
+			graphe.showMatriceIncidence();
 			cout << endl;
 
 			cout << '\t' << "Detection de circuits" << endl;

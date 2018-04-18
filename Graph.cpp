@@ -76,6 +76,27 @@ void Graph::setMatriceAdjacence() {
 	}
 }
 
+void Graph::setMatriceIncidence() {
+    /**
+     * Generate the incidence matrix with the transition arcs.
+     */
+    for (int i = 0; i < m_nbSommets; i++) {
+        m_matriceIncidence.push_back(vector<int>(m_nbArcs, false));
+    }
+    for (int j = 0; j < m_nbSommets; j++){
+        for (int i = 0; i < m_nbArcs; i++) {
+            if(m_arcs[i].getFinish() == j)
+                m_matriceIncidence[j][i] = -1;
+        }
+    }
+    for (int j = 0; j < m_nbSommets; j++){
+        for (int i = 0; i < m_nbArcs; i++) {
+            if(m_arcs[i].getStart() == j)
+                m_matriceIncidence[j][i] = 1;
+        }
+    }
+}
+
 void Graph::showMatriceAdjacence() {
 	for (int i = 0; i < m_nbSommets; i++) {
 		for (int j = 0; j < m_nbSommets; j++) {
@@ -84,6 +105,15 @@ void Graph::showMatriceAdjacence() {
 		cout << endl;
 	}
 
+}
+
+void Graph::showMatriceIncidence() {
+    for (int i = 0; i < m_nbSommets; i++) {
+        for (int j = 0; j < m_nbArcs; j++) {
+            cout << '\t' << m_matriceIncidence[i][j];
+        }
+        cout << endl;
+    }
 }
 
 void Graph::showMatriceAdjacence2() {
@@ -431,6 +461,8 @@ int Graph::TardFinal(int var_tmp, int sommet, int rang) {
 	}
 	if(tmp == 0)
 		return tmp + TardFinal(var_tmp, sommet, rang + 1);
+    else
+        return -1;
 
 }
 
