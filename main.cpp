@@ -17,14 +17,15 @@ int main()
 	while (niv != -1)// Tant que l'on veut examiner les niveaux
 	{
 		/// Demande à l'utilisateur quel niveau il souhaite évaluer le graphe (condition switch)
-		cout << "Niveau souhaite (de 1 a 4) :" << endl;
+		cout << '\t' << "Niveau souhaite (de 1 a 4) :" << endl;
+		cout << "  => Niveau : ";
 
 		cin >> niv;
 
 		switch (niv)
 		{
 		case 1: ///Niveau 1: Matrice d'adjacence, Matrice de Valeurs, Détection de circuit, Calcul de Rang
-			cout << "Niveau 1" << endl;
+			cout << "  => Niveau 1" << endl;
 			cout << endl;
 					
 			/// On créer le graphe à partir d'un fichier
@@ -35,25 +36,31 @@ int main()
 
 
 			///Affichage de la Matrice d'adjacence
-			cout << '\t' << "Affichage de la Matrice d'adjacence" << endl << endl;
+			cout << "  => Affichage de la Matrice d'adjacence" << endl << endl;
 			graphe.setMatriceAdjacence();
 			graphe.showMatriceAdjacence();
 
 			cout << endl;
 
-			cout << '\t' << "Affichage de la Matrice de Valeurs" << endl << endl;
+			cout << "  => Affichage de la Matrice de Valeurs" << endl << endl;
 
 			graphe.setMatriceIncidence();
 			graphe.showMatriceIncidence();
 			cout << endl;
 
-			cout << '\t' << "Detection de circuits" << endl;
-			
+			cout << "  => Detection de circuits" << endl << endl;
+
 			graphe.circuitDetection();
 			cout << endl;
 
-			cout << "Calcul de Rangs" << endl;
+			cout << "  => Suivi de la detection et de l'elimination des sommets" << endl << endl;
+			graphe.showAntecedents();
+			cout << endl;
+
+			cout << "  => Calcul de Rangs" << endl << endl;
 			graphe.showRang();
+			
+			cout << endl << endl;
 
 			cout << endl;
 			break;

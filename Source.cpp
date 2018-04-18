@@ -7,8 +7,8 @@ Graph create_graph()
 	string  file = "0";
 	Graph graphe;
 
-	cout << "Bonjour, veuillez choisir un graphe (nombre : 0 -> 16)" << endl;
-	cout << "graphe : ";
+	cout << '\t' << "Bonjour, veuillez choisir un graphe (nombre : 0 -> 16)" << endl;
+	cout << "  => graphe : ";
     cin >> file;                          //L'utilisateur doit rentrer un nombre allant de 0 � 16
 
 	file += ".txt";                     //on ajoute le .txt

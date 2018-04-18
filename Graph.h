@@ -25,7 +25,6 @@ public:
 	void showMatriceAdjacence();
     void setMatriceIncidence();
     void showMatriceIncidence();
-	void showMatriceAdjacence2();
 	bool verifMaxUneEntree();
 	bool verifMaxUneSortie();
 	bool verifAccessibleDepuisEntree();
@@ -53,6 +52,11 @@ public:
 	char erreur(std::string tmp);
 	std::string create_line(int size, int max_size);
 	std::string create_space(int size);
+	void showAntecedents();
+	void initializeAdjacenceTmp();
+	bool showEliminations(int rang, int sommet);
+	void showEliminate();
+	bool AdjacenceTmpEqualstoZero();
 
 protected:
 
@@ -81,6 +85,8 @@ private:
 	int m_duree = 0;
 	std::vector<int>m_vars;
 	bool m_rollback = false;
+	std::vector<vector<int>>m_eliminations;
+	std::vector<vector<bool>>m_matriceAdjacence2;
 
 };
 
