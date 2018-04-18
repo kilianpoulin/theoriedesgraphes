@@ -35,19 +35,21 @@ int main()
 
 
 			///Affichage de la Matrice d'adjacence
-			cout << "Affichage de la Matrice d'adjacence" << endl;
+			cout << '\t' << "Affichage de la Matrice d'adjacence" << endl << endl;
 			graphe.setMatriceAdjacence();
 			graphe.showMatriceAdjacence();
 
 			cout << endl;
 
-			cout << "Affichage de la Matrice de Valeurs" << endl;
+			cout << '\t' << "Affichage de la Matrice de Valeurs" << endl << endl;
 			/*Code
 			à
 			insérer*/
 			cout << endl;
 
-			cout << "Detection de circuits" << endl;
+			cout << '\t' << "Detection de circuits" << endl;
+			
+			cout << '\t' << 
 			graphe.circuitDetection();
 			cout << endl;
 
