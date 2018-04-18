@@ -98,7 +98,18 @@ void Graph::setMatriceIncidence() {
 }
 
 void Graph::showMatriceAdjacence() {
+	cout << '\t';
 	for (int i = 0; i < m_nbSommets; i++) {
+		cout << '\t' << i;
+	}
+	cout << endl;
+	cout << '\t';
+	for (int i = 0; i < m_nbSommets * 8; i++) {
+		cout << "-";
+	}
+	cout << endl;
+	for (int i = 0; i < m_nbSommets; i++) {
+		cout << '\t' << i << "  |";
 		for (int j = 0; j < m_nbSommets; j++) {
 			cout << '\t' << m_matriceAdjacence[i][j];
 		}

@@ -41,15 +41,14 @@ int main()
 
 			cout << endl;
 
-			cout << "Affichage de la Matrice de Valeurs" << endl;
-			cout << "Affichage de la Matrice de Valeurs" << endl;
+			cout << '\t' << "Affichage de la Matrice de Valeurs" << endl << endl;
+
 			graphe.setMatriceIncidence();
 			graphe.showMatriceIncidence();
 			cout << endl;
 
 			cout << '\t' << "Detection de circuits" << endl;
 			
-			cout << '\t' << 
 			graphe.circuitDetection();
 			cout << endl;
 
