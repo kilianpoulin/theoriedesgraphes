@@ -42,9 +42,8 @@ int main()
 			cout << endl;
 
 			cout << "Affichage de la Matrice de Valeurs" << endl;
-			/*Code
-			à
-			insérer*/
+            graphe.setMatriceIncidence();
+            graphe.showMatriceIncidence();
 			cout << endl;
 
 			cout << "Detection de circuits" << endl;
