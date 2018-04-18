@@ -303,7 +303,7 @@ bool Graph::detectionRang()
 {
 	int nbetats = 1;
 	if (m_entrees.size() == 0) { // il n'y a pas d'entrées donc circuit
-		cout << "ERREUR --> le graph n'a pas d'entrée" << endl;
+		cout << '\t' << "ERREUR --> le graph n'a pas d'entree" << endl;
 		return true;
 	}
 
