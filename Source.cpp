@@ -9,7 +9,7 @@ Graph create_graph()
 
 	cout << "Bonjour, veuillez choisir un graphe (nombre : 0 -> 16)" << endl;
 	cout << "graphe : ";
-	cin >> file;                          //L'utilisateur doit rentrer un nombre allant de 0 � 16
+    cin >> file;                          //L'utilisateur doit rentrer un nombre allant de 0 � 16
 
 	file += ".txt";                     //on ajoute le .txt
 	cout << file << endl;
