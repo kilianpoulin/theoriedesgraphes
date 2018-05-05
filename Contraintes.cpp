@@ -19,6 +19,8 @@ Graph Contraintes::create_graph() {
 	Arcs tmp_arc;
 	vector <Arcs> arcs;
 	Graph graphe;
+	vector<int> durees;
+	durees.push_back(0);
 
 	cout << "Veuillez choisir un fichier de contraintes (nombre : 1 -> 122)" << endl;
 	cout << "fichier de contrainte : ";
@@ -38,13 +40,14 @@ Graph Contraintes::create_graph() {
 
 								  /// puis on les enregistre dans la structure graphe
 			graphe.setNbSommets(nbSommets);
-
-			vector <int> duree;
+			vector<int>duree;
 			for (int i = 0; i < nbSommets; i++) {
 				fichier >> tmp >> tmp;
+				durees.push_back(tmp);
 				duree.push_back(tmp);
 			}
 
+			
 			/// On stocke toutes les transitions
 			while (getline(fichier, line)) {
 				stringstream ss(line);
@@ -55,15 +58,15 @@ Graph Contraintes::create_graph() {
 
 					if (count == 0) {
 						start = NULL;
-						/// le sommet de départ
-						tmp_arc.setStart(word);
+						/// le sommet d'arrivée
+						tmp_arc.setFinish(word);
 						start = word;
 
 					}
-					else {
-						tmp_arc.setFinish(word);   /// le sommet d'arrivée
+					else if(word != 0) {
+						tmp_arc.setStart(word);   /// le sommet de départ
 
-						tmp_arc.setDuree(duree[start - 1]); /// la durée de l'arc
+						tmp_arc.setDuree(duree[word - 1]); /// la durée de l'arc
 
 						if (tmp_arc.getFinish() != 0)
 							arcs.push_back(tmp_arc);
@@ -76,7 +79,7 @@ Graph Contraintes::create_graph() {
 
 			}
 		}
-
+		graphe.setDurees(durees);
 		/// On met les résultats dans l'objet graphe
 		graphe.setNbArcs(arcs.size());
 		graphe.setArcs(arcs);

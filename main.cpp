@@ -119,6 +119,43 @@ int main()
 
 			graphe.show_graph();
 
+			graphe.contrainteSetMatriceAdjacence();
+			
+			graphe.contrainteSetEntrees();
+			graphe.contrainteSetSorties();
+
+			graphe.createAlpha();
+			graphe.createOmega();
+			graphe.show_graph();
+
+			cout << "  => Detection de circuits" << endl << endl;
+
+			graphe.circuitDetection();
+			cout << endl;
+
+			cout << "  => Suivi de la detection et de l'elimination des sommets" << endl << endl;
+			graphe.showAntecedents();
+			cout << endl;
+
+			cout << "  => Calcul de Rangs" << endl << endl;
+			graphe.showRang();
+
+			if (graphe.showVerifications()) {
+				cout << endl;
+			}
+				cout << "Calcul des calendriers et marges : " << endl << endl;
+
+				graphe.calcDatePlusTot(); ;
+				graphe.calcDatePlusTard();
+				graphe.calcMargeTotale();
+				graphe.calcMargeLibre();
+
+				graphe.calcDatePlusTard();
+
+				graphe.showCalendrier();
+			
+			cout << endl;
+			
 			cout << endl;
 			break;
 		case 4:

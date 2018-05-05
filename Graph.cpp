@@ -50,7 +50,7 @@ void Graph::show_graph() {
 	//Optionnel
 	cout << '\t' << m_nbSommets << '\t' << '\t' << '\t' << "Nombre de sommets du graphe" << endl;
 	cout << '\t' << m_nbArcs << '\t' << '\t' << '\t' << "Nombre d'arcs du graphe" << endl;
-	for (int i = 0; i< m_nbArcs; i++)
+	for (int i = 0; i < m_nbArcs; i++)
 	{
 		cout << '\t' << m_arcs[i].getStart();
 		cout << '\t' << m_arcs[i].getFinish();
@@ -66,14 +66,45 @@ void Graph::setMatriceAdjacence() {
 	/**
 	* Generate the adjustment matrix with the transition arcs.
 	*/
-
 	for (int i = 0; i < m_nbSommets; i++) {
 		m_matriceAdjacence.push_back(vector<bool>(m_nbSommets, false));
+	}
+	
+	for (int i = 0; i < m_nbArcs; i++) {
+		m_matriceAdjacence[m_arcs[i].getStart()][m_arcs[i].getFinish()] = true;
+	}
+}
+
+void Graph::contrainteSetMatriceAdjacence() {
+	for (int i = 0; i < m_nbSommets + 1; i++) {
+		m_matriceAdjacence.push_back(vector<bool>(m_nbSommets + 1, false));
 	}
 
 	for (int i = 0; i < m_nbArcs; i++) {
 		m_matriceAdjacence[m_arcs[i].getStart()][m_arcs[i].getFinish()] = true;
 	}
+}
+
+
+void Graph::contrainteshowMatriceAdjacence() {
+	cout << '\t';
+	for (int i = 1; i < m_nbSommets + 1; i++) {
+		cout << '\t' << i;
+	}
+	cout << endl;
+	cout << '\t';
+	for (int i = 1; i < (m_nbSommets + 1) * 8; i++) {
+		cout << "-";
+	}
+	cout << endl;
+	for (int i = 1; i < (m_nbSommets + 1); i++) {
+		cout << '\t' << i << "  |";
+		for (int j = 0; j < m_nbSommets; j++) {
+			cout << '\t' << m_matriceAdjacence[i][j];
+		}
+		cout << endl;
+	}
+
 }
 
 void Graph::setMatriceIncidence() {
@@ -96,6 +127,8 @@ void Graph::setMatriceIncidence() {
 		}
 	}
 }
+
+
 
 void Graph::showMatriceAdjacence() {
 	cout << '\t';
@@ -776,4 +809,77 @@ bool Graph::AdjacenceTmpEqualstoZero() {
 	}
 	return true;
 }
+
+void Graph::contrainteSetEntrees() {
+	int tmp = 0;
+	for (int i = 1; i < m_nbSommets + 1; i++) {
+		tmp = 0;
+		for (int j = 1; j < m_nbSommets + 1; j++) {
+			if (m_matriceAdjacence[j][i] == 1)
+			{
+				tmp += 1;
+			}
+		}
+		if (tmp == 0) // il n'y a pas prédécesseurs
+			m_entrees.push_back(i);
+	}
+}
+
+void Graph::contrainteSetSorties() {
+	int tmp = 0;
+	for (int i = 1; i < m_nbSommets + 1; i++) {
+		tmp = 0;
+		for (int j = 1; j < m_nbSommets + 1; j++) {
+			if (m_matriceAdjacence[i][j] == 1)
+			{
+				tmp += 1;
+			}
+		}
+		if (tmp == 0) // il n'y a pas de successeurs
+			m_sorties.push_back(i);
+	}
+}
+
+void Graph::getSorties() {
+	for (int i = 0; i < m_sorties.size(); i++) {
+		cout << m_sorties[i] << endl;
+	}
+}
+
+void Graph::createAlpha() {
+	Arcs tmp_arc;
+	int duree = 0;
+	for (int i = 0; i < m_entrees.size(); i++) {
+		tmp_arc.setStart(0);
+		tmp_arc.setFinish(m_entrees[i]);
+		tmp_arc.setDuree(0);
+		m_arcs.push_back(tmp_arc);
+		m_nbArcs++;
+	}
+}
+
+void Graph::createOmega() {
+	Arcs tmp_arc;
+	for (int i = 0; i < m_entrees.size(); i++) {
+		tmp_arc.setStart(m_sorties[i]);
+		tmp_arc.setFinish(m_nbSommets + 1);
+		tmp_arc.setDuree(m_durees[m_sorties[i]]);
+		m_arcs.push_back(tmp_arc);
+		m_nbArcs++;
+
+	}
+}
+
+void Graph::setDurees(vector<int> durees) {
+	for (int i = 0; i < durees.size(); i++) {
+		m_durees.push_back(durees[i]);
+	}
+}
+
+
+
+
+
+
+
 

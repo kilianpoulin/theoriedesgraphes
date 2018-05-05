@@ -23,6 +23,8 @@ public:
 	void show_graph();
 	void setMatriceAdjacence();
 	void showMatriceAdjacence();
+	void contrainteSetMatriceAdjacence();
+	void contrainteshowMatriceAdjacence();
     void setMatriceIncidence();
     void showMatriceIncidence();
 	bool verifMaxUneEntree();
@@ -57,6 +59,12 @@ public:
 	bool showEliminations(int rang, int sommet);
 	void showEliminate();
 	bool AdjacenceTmpEqualstoZero();
+	void contrainteSetEntrees();
+	void contrainteSetSorties();
+	void getSorties();
+	void createAlpha();
+	void createOmega();
+	void setDurees(std::vector<int> durees);
 
 protected:
 
@@ -67,6 +75,7 @@ private:
 	int m_nbSorties;
 	int m_pointEntree;
 	int m_pointSortie;
+	std::vector<int> m_durees;
 	std::vector <Arcs> m_arcs;
 	std::vector< vector<bool> > m_matriceAdjacence;
     std::vector< vector<int> > m_matriceIncidence;
@@ -75,6 +84,7 @@ private:
 	std::vector<vector<int>> m_rang;
 	bool m_circuit;
 	std::vector<int> m_entrees;
+	std::vector<int> m_sorties;
 	int m_tmp_rang = 1;
 	std::vector<vector<int>>m_date_plus_tot;
 	std::vector<vector<int>>m_date_plus_tard;
