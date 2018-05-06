@@ -119,20 +119,32 @@ int main()
 
 			graphe.show_graph();
 
+			// matrice d'adjacence sans alpha et omega
 			graphe.contrainteSetMatriceAdjacence();
-			
+
 			graphe.contrainteSetEntrees();
 			graphe.contrainteSetSorties();
 
 			graphe.createAlpha();
 			graphe.createOmega();
+			// matrice d'adjacence avec apha et omega
+			
+			graphe.contrainteSetMatriceAdjacence();
+
+
 			graphe.show_graph();
+
+			///Affichage de la Matrice d'adjacence
+			cout << "  => Affichage de la Matrice d'adjacence" << endl << endl;
+			graphe.showMatriceAdjacence();
+
+			cout << endl;
 
 			cout << "  => Detection de circuits" << endl << endl;
 
 			graphe.circuitDetection();
 			cout << endl;
-
+			
 			cout << "  => Suivi de la detection et de l'elimination des sommets" << endl << endl;
 			graphe.showAntecedents();
 			cout << endl;
@@ -143,16 +155,24 @@ int main()
 			if (graphe.showVerifications()) {
 				cout << endl;
 			}
-				cout << "Calcul des calendriers et marges : " << endl << endl;
+			
+			cout << "Calcul des calendriers et marges : " << endl << endl;
 
-				graphe.calcDatePlusTot(); ;
-				graphe.calcDatePlusTard();
-				graphe.calcMargeTotale();
-				graphe.calcMargeLibre();
+			graphe.calcDatePlusTot(); 
+			graphe.calcDatePlusTard();
+			graphe.calcMargeTotale();
+			graphe.calcMargeLibre();
+			graphe.showCalendrier();
+			break;
 
-				graphe.calcDatePlusTard();
+			
+			
+			
 
-				graphe.showCalendrier();
+			//graphe.calcDatePlusTard();
+
+			graphe.showCalendrier();
+			break;
 			
 			cout << endl;
 			

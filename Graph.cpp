@@ -48,6 +48,7 @@ void Graph::setArcs(vector <Arcs> arcs) {
 void Graph::show_graph() {
 	///Affichage du graphe (contenu du fichier)
 	//Optionnel
+
 	cout << '\t' << m_nbSommets << '\t' << '\t' << '\t' << "Nombre de sommets du graphe" << endl;
 	cout << '\t' << m_nbArcs << '\t' << '\t' << '\t' << "Nombre d'arcs du graphe" << endl;
 	for (int i = 0; i < m_nbArcs; i++)
@@ -76,6 +77,8 @@ void Graph::setMatriceAdjacence() {
 }
 
 void Graph::contrainteSetMatriceAdjacence() {
+	m_matriceAdjacence.clear();
+
 	for (int i = 0; i < m_nbSommets + 1; i++) {
 		m_matriceAdjacence.push_back(vector<bool>(m_nbSommets + 1, false));
 	}
@@ -83,6 +86,7 @@ void Graph::contrainteSetMatriceAdjacence() {
 	for (int i = 0; i < m_nbArcs; i++) {
 		m_matriceAdjacence[m_arcs[i].getStart()][m_arcs[i].getFinish()] = true;
 	}
+
 }
 
 
@@ -293,9 +297,9 @@ void Graph::showRang() {
 	cout << '\t' << "------------------------" << endl;
 	for (int i = 0; i < m_tmp_rang - 1; i++) {
 		cout << '\t' << i + 1 << '\t' << '|' << '\t';
-		for (int j = 0; j < m_rang[i].size() - 1; j++) {
+		for (int j = 0; j < m_rang[i].size(); j++) {
 			cout << m_rang[i][j];
-			if (j != m_rang[i].size() - 2)
+			if (j != m_rang[i].size() - 1)
 				cout << ", ";
 		}
 		cout << '\t' << '|' << endl;
@@ -304,6 +308,7 @@ void Graph::showRang() {
 }
 
 void Graph::circuitDetection() {
+
 	m_circuit = true;
 	for (int x = 0; x < m_nbSommets; x++) //initialise le vector m_tmp
 	{
@@ -311,9 +316,11 @@ void Graph::circuitDetection() {
 	}
 	m_adj2 = m_matriceAdjacence;
 
+	m_entrees.clear();
 	/// nombre d'antécédents par sommet i
 	for (int i = 0; i < m_nbSommets; i++) {
 		for (int j = 0; j < m_nbSommets; j++) {
+
 			if (m_adj2[j][i] == 1)
 			{
 				m_tmp[i] += 1;
@@ -322,6 +329,7 @@ void Graph::circuitDetection() {
 		if (m_tmp[i] == 0)
 			m_entrees.push_back(i);
 	}
+
 	if (detectionRang() == true)
 	{
 		cout << '\t' << "RESULTAT  ==> " << "Ce graphe contient un ou plusieurs circuits" << endl;
@@ -341,8 +349,10 @@ bool Graph::detectionRang()
 	}
 
 	cout << '\t' << "Elimination au rang 1 : " << endl;
-	m_rang.push_back(vector<int>(m_entrees.size() + 1, NULL)); // on connait le nombre d'états dans le rang
+
+	m_rang.push_back(vector<int>(m_entrees.size(), NULL)); // on connait le nombre d'états dans le rang
 	m_eliminations.push_back(vector<int>(0, 0));
+	cout << "taille = " << m_entrees.size() << endl;
 	for (int i = 0; i < m_entrees.size(); i++) { // on traite d'abord les entrées
 												 // on les met au rang 1
 		m_rang[0][i] = m_entrees[i];
@@ -388,7 +398,7 @@ bool Graph::elimination()
 
 			}
 		}
-		m_rang.push_back(vector<int>(tmp_etat.size() + 1, NULL)); // on connait le nombre d'états dans le rang
+		m_rang.push_back(vector<int>(tmp_etat.size(), NULL)); // on connait le nombre d'états dans le rang
 		if(tmp_etat.size() != 0)
 			cout << '\t' << "Elimination au rang " << m_tmp_rang + 1 << " : "<< endl;
 		for (int n = 0; n < tmp_etat.size(); n++) {
@@ -424,46 +434,59 @@ int Graph::getMaxDureeAntecedent(int sommet) {
 
 void Graph::initializeDatePlusTot() {
 	int j = 0;
-	for (int i = 0; i < m_tmp_rang - 1; i++) {
-		for (j = 1; j< m_rang[i].size() - 1; j++) {
+	for (int i = 0; i < m_rang.size(); i++) {
+		for (j = 1; j < m_rang[i].size(); j++) {
 		}
 		m_date_plus_tot.push_back(vector<int>(j, 0));
 	}
 }
 
 void Graph::calcDatePlusTot() {
+	int tmp = 0;
 	// on initialise le vecteur date au plus tot
 	initializeDatePlusTot();
-	for (int i = 0; i < m_tmp_rang - 1; i++) {
-		for (int j = 0; j < m_rang[i].size() - 1; j++) {
+	for (int i = 1; i < m_tmp_rang; i++) {
+		for (int j = 0; j < m_rang[i].size(); j++) {
 			// on recherche la duree la plus grande entre l'état et ses antécédents
-			m_date_plus_tot[i][j] = getMaxDureeAntecedent(m_rang[i][j]);
+			for (int z = 0; z < m_arcs.size(); z++) {
+				if (m_arcs[z].getFinish() == m_rang[i][j]) {
+					// on cherche la date au plus tot précédente
+					for (int y = 0; y < i; y++) {
+						for (int x = 0; x < m_rang[y].size(); x++) {
+							if (m_rang[y][x] == m_arcs[z].getStart())
+								tmp = m_date_plus_tot[y][x];
+						}
+					}
+					tmp += m_arcs[z].getDuree();
+					if (tmp > m_date_plus_tot[i][j])
+						m_date_plus_tot[i][j] = tmp;
+					tmp = 0;
+				}
+			}
 		}
 	}
-
 }
 
 void Graph::showCalendrier() {
 	cout << '\t' << "Rang" << '\t' << "Sommet" << '\t' << "D+tot" << '\t' << "D+tard" << '\t'
-		<< "Marge Totale" << '\t' << "Marge Libre" << endl;
-	for (int i = 0; i < m_date_plus_tot.size(); i++) {
+		<< '\t'<< "Marge T" << '\t' << "Marge L" << endl;
+	for (int i = 0; i < m_date_plus_tot.size() - 1; i++) {
 		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
 			// on affiche le rang, le sommet et sa date au plus tôt
 			cout << '\t' << i + 1 << '\t' << m_rang[i][j] << '\t' << m_date_plus_tot[i][j] <<
-				'\t' << m_date_plus_tard[i][j] << '\t' << m_marge_totale[i][j] <<
+				'\t' << m_date_plus_tard[i][j] << '\t' << '\t' << m_marge_totale[i][j] <<
 				'\t' << m_marge_libre[i][j] << endl;
 		}
-		cout << '\t' << "--------------------------------------------------------" << endl;
+		cout << '\t' << "---------------------------------------------------------" << endl;
 	}
-
 }
 
 void Graph::initializeDatePlusTard() {
 	int j = 0;
-	for (int i = 0; i < m_tmp_rang - 1; i++) {
-		for (j = 1; j< m_rang[i].size() - 1; j++) {
+	for (int i = 0; i < m_rang.size(); i++) {
+		for (j = 1; j < m_rang[i].size(); j++) {
 		}
-		m_date_plus_tard.push_back(vector<int>(j, 0));
+		m_date_plus_tard.push_back(vector<int>(j, 100));
 	}
 }
 
@@ -524,25 +547,36 @@ int Graph::TardFinal(int var_tmp, int sommet, int rang) {
 }
 
 void Graph::calcDatePlusTard() {
-	// on initialise le vecteur date au plus tot
+	// on initialise le vecteur date au plus tard
 	initializeDatePlusTard();
-	for (int i = m_tmp_rang - 1; i > -1; i--) {
-		for (int j = 0; j < m_rang[i].size() - 1; j++) {
-			m_var_tmp = 0;
-
-			TardFinal(0, m_rang[i][j], i);
-
-			m_date_plus_tard[i][j] = m_date_plus_tot[m_tmp_rang - 2][0] - m_duree;
-			m_var = 0;
-			m_duree = 0;
+	m_date_plus_tard[m_tmp_rang - 2][0] = m_date_plus_tot[m_tmp_rang - 2][0];
+	int tmp = 0;
+	for (int i = m_tmp_rang - 3; i >= 0; i--) {
+		for (int j = 0; j < m_rang[i].size(); j++) {
+			// on recherche la duree la plus grande entre l'état et ses antécédents
+			for (int z = 0; z < m_arcs.size(); z++) {
+				if (m_arcs[z].getStart() == m_rang[i][j]) {
+					// on cherche la date au plus tot précédente
+					for (int y = i; y < m_tmp_rang - 1; y++) {
+						for (int x = 0; x < m_rang[y].size(); x++) {
+							if (m_rang[y][x] == m_arcs[z].getFinish())
+								tmp = m_date_plus_tard[y][x];
+						}
+					}
+					tmp -= m_arcs[z].getDuree();
+					if (tmp < m_date_plus_tard[i][j])
+						m_date_plus_tard[i][j] = tmp;
+					tmp = 0;
+				}
+			}
 		}
 	}
 }
 
 void Graph::initializeMargeTotale() {
 	int j = 0;
-	for (int i = 0; i < m_tmp_rang - 1; i++) {
-		for (j = 1; j< m_rang[i].size() - 1; j++) {
+	for (int i = 0; i < m_rang.size(); i++) {
+		for (j = 1; j< m_rang[i].size(); j++) {
 		}
 		m_marge_totale.push_back(vector<int>(j, 0));
 	}
@@ -559,8 +593,8 @@ void Graph::calcMargeTotale() {
 
 void Graph::initializeMargeLibre() {
 	int j = 0;
-	for (int i = 0; i < m_tmp_rang - 1; i++) {
-		for (j = 1; j< m_rang[i].size() - 1; j++) {
+	for (int i = 0; i < m_rang.size(); i++) {
+		for (j = 1; j< m_rang[i].size(); j++) {
 		}
 		m_marge_libre.push_back(vector<int>(j, 0));
 	}
@@ -568,9 +602,28 @@ void Graph::initializeMargeLibre() {
 }
 void Graph::calcMargeLibre() {
 	initializeMargeLibre();
-	for (int i = 0; i < m_date_plus_tot.size(); i++) {
+	int tmp = 100;
+	for (int i = 1; i < m_date_plus_tot.size() - 1; i++) {
 		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
-			m_marge_libre[i][j] = m_date_plus_tard[i][j] - m_date_plus_tot[i][j];
+			// on s'intéresse aux successeurs
+			for (int z = 0; z < m_arcs.size(); z++) {
+				if (m_arcs[z].getStart() == m_rang[i][j]) {
+					// on cherche sa date au plus tot
+					for (int x = i + 1; x < m_rang.size(); x++) {
+						for (int y = 0; y < m_rang[x].size(); y++) {
+							if (m_arcs[z].getFinish() == m_rang[x][y]) {
+								if (tmp > m_date_plus_tot[x][y])
+									tmp = m_date_plus_tot[x][y];
+							}
+						}
+					}
+				}
+			}
+			// tant qu'on est pas à l'état omega
+			if(m_rang[i][j] != m_nbSommets - 1)
+				m_marge_libre[i][j] = tmp - m_durees[m_rang[i][j]] - m_date_plus_tot[i][j];
+			
+			tmp = 100;
 		}
 	}
 }
@@ -856,18 +909,28 @@ void Graph::createAlpha() {
 		m_arcs.push_back(tmp_arc);
 		m_nbArcs++;
 	}
+	// on vient d'ajouter un nouveau sommet
+	m_nbSommets++;
+	//il y a une unique entrée désormais
+	m_entrees.clear();
+	m_entrees.push_back(0);
 }
 
 void Graph::createOmega() {
 	Arcs tmp_arc;
-	for (int i = 0; i < m_entrees.size(); i++) {
+	for (int i = 0; i < m_sorties.size(); i++) {
 		tmp_arc.setStart(m_sorties[i]);
-		tmp_arc.setFinish(m_nbSommets + 1);
+		tmp_arc.setFinish(m_nbSommets);
 		tmp_arc.setDuree(m_durees[m_sorties[i]]);
 		m_arcs.push_back(tmp_arc);
 		m_nbArcs++;
 
 	}
+	// on vient d'ajouter un nouveau sommet
+	m_nbSommets++;
+	//il y a une unique sortie désormais
+	m_sorties.clear();
+	m_sorties.push_back(m_nbSommets - 1);
 }
 
 void Graph::setDurees(vector<int> durees) {
