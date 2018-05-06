@@ -121,15 +121,17 @@ int main()
 
 			// matrice d'adjacence sans alpha et omega
 			graphe.contrainteSetMatriceAdjacence();
+			graphe.contrainteSetMatriceIncidence();
 
 			graphe.contrainteSetEntrees();
 			graphe.contrainteSetSorties();
 
 			graphe.createAlpha();
 			graphe.createOmega();
-			// matrice d'adjacence avec apha et omega
 			
+			// matrice d'adjacence avec apha et omega
 			graphe.contrainteSetMatriceAdjacence();
+			graphe.contrainteSetMatriceIncidence();
 
 
 			graphe.show_graph();
@@ -137,6 +139,11 @@ int main()
 			///Affichage de la Matrice d'adjacence
 			cout << "  => Affichage de la Matrice d'adjacence" << endl << endl;
 			graphe.showMatriceAdjacence();
+
+			cout << endl;
+
+			cout << "  => Affichage de la Matrice d'incidence" << endl << endl;
+			graphe.showMatriceIncidence();
 
 			cout << endl;
 

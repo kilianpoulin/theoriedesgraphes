@@ -25,6 +25,7 @@ public:
 	void showMatriceAdjacence();
 	void contrainteSetMatriceAdjacence();
 	void contrainteshowMatriceAdjacence();
+	void contrainteSetMatriceIncidence();
     void setMatriceIncidence();
     void showMatriceIncidence();
 	bool verifMaxUneEntree();

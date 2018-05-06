@@ -132,6 +132,25 @@ void Graph::setMatriceIncidence() {
 	}
 }
 
+void Graph::contrainteSetMatriceIncidence() {
+	m_matriceIncidence.clear();
+	for (int i = 0; i < m_nbSommets + 1; i++) {
+		m_matriceIncidence.push_back(vector<int>(m_nbArcs + 1, false));
+	}
+	for (int j = 0; j < m_nbSommets - 1; j++) {
+		for (int i = 0; i < m_nbArcs; i++) {
+			if (m_arcs[i].getFinish() == j)
+				m_matriceIncidence[j][i] = -1;
+		}
+	}
+	for (int j = 0; j < m_nbSommets - 1; j++) {
+		for (int i = 0; i < m_nbArcs; i++) {
+			if (m_arcs[i].getStart() == j)
+				m_matriceIncidence[j][i] = 1;
+		}
+	}
+}
+
 
 
 void Graph::showMatriceAdjacence() {
