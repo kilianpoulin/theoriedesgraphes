@@ -4,13 +4,15 @@ Graph create_graph()
 {
 	int nbArcs, nbSommets;
 	int start, finish, duree;
-	string  file = "0";
+	string  file_name = "0";
+	string file = "AB";
 	Graph graphe;
 
 	cout << '\t' << "Bonjour, veuillez choisir un graphe (nombre : 0 -> 16)" << endl;
 	cout << "  => graphe : ";
-    cin >> file;                          //L'utilisateur doit rentrer un nombre allant de 0 � 16
+    cin >> file_name;                          //L'utilisateur doit rentrer un nombre allant de 0 � 16
 
+	file += file_name;
 	file += ".txt";                     //on ajoute le .txt
 	cout << file << endl;
 	cout << endl;                   //file stock -> racine du fichier

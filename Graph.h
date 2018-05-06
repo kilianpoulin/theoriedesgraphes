@@ -44,8 +44,6 @@ public:
 	void initializeDatePlusTot();
 	void calcDatePlusTard();
 	void initializeDatePlusTard();
-	int TardFinal(int var_tmp, int sommet, int rang);
-	int TardTemp(int sommet, int rang);
 	void calcMargeTotale();
 	void initializeMargeTotale();
 	void initializeMargeLibre();

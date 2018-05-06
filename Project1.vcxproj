@@ -135,6 +135,11 @@
     <Text Include="1.txt" />
     <Text Include="10.txt" />
     <Text Include="2.txt" />
+    <Text Include="AB5.txt" />
+    <Text Include="AB6.txt" />
+    <Text Include="AB7.txt" />
+    <Text Include="AB8.txt" />
+    <Text Include="AB9.txt" />
     <Text Include="CO1.txt" />
     <Text Include="3.txt" />
     <Text Include="CO11.txt" />

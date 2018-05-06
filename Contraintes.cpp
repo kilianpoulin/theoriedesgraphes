@@ -24,7 +24,7 @@ Graph Contraintes::create_graph() {
 
 	cout << "Veuillez choisir un fichier de contraintes (nombre : 1 -> 122)" << endl;
 	cout << "fichier de contrainte : ";
-	string file2 = "CO";
+	string file2 = "AB";
 	string file;
 	cin >> file;                          //L'utilisateur doit rentrer un nombre allant de 01 à 122
 

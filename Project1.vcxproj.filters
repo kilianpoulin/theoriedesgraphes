@@ -59,5 +59,10 @@
     <Text Include="CO11.txt" />
     <Text Include="CO23.txt" />
     <Text Include="23.txt" />
+    <Text Include="AB9.txt" />
+    <Text Include="AB5.txt" />
+    <Text Include="AB6.txt" />
+    <Text Include="AB7.txt" />
+    <Text Include="AB8.txt" />
   </ItemGroup>
 </Project>

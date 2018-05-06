@@ -295,8 +295,8 @@ bool Graph::MatrAdjEqualstoZero() {
 void Graph::showRang() {
 	cout << '\t' << "Rang" << '\t' << '|' << "   Sommets" << endl;
 	cout << '\t' << "------------------------" << endl;
-	for (int i = 0; i < m_tmp_rang - 1; i++) {
-		cout << '\t' << i + 1 << '\t' << '|' << '\t';
+	for (int i = 0; i < m_rang.size() - 1; i++) {
+		cout << '\t' << i << '\t' << '|' << '\t';
 		for (int j = 0; j < m_rang[i].size(); j++) {
 			cout << m_rang[i][j];
 			if (j != m_rang[i].size() - 1)
@@ -348,11 +348,11 @@ bool Graph::detectionRang()
 		return true;
 	}
 
-	cout << '\t' << "Elimination au rang 1 : " << endl;
+	cout << '\t' << "Elimination au rang 0 : " << endl;
 
 	m_rang.push_back(vector<int>(m_entrees.size(), NULL)); // on connait le nombre d'états dans le rang
 	m_eliminations.push_back(vector<int>(0, 0));
-	cout << "taille = " << m_entrees.size() << endl;
+
 	for (int i = 0; i < m_entrees.size(); i++) { // on traite d'abord les entrées
 												 // on les met au rang 1
 		m_rang[0][i] = m_entrees[i];
@@ -400,7 +400,7 @@ bool Graph::elimination()
 		}
 		m_rang.push_back(vector<int>(tmp_etat.size(), NULL)); // on connait le nombre d'états dans le rang
 		if(tmp_etat.size() != 0)
-			cout << '\t' << "Elimination au rang " << m_tmp_rang + 1 << " : "<< endl;
+			cout << '\t' << "Elimination au rang " << m_tmp_rang << " : "<< endl;
 		for (int n = 0; n < tmp_etat.size(); n++) {
 			m_rang[m_tmp_rang][n] = tmp_etat[n];
 			cout << '\t' << '\t' << "sommet : " << m_rang[m_tmp_rang][n] << endl;
@@ -473,7 +473,7 @@ void Graph::showCalendrier() {
 	for (int i = 0; i < m_date_plus_tot.size() - 1; i++) {
 		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
 			// on affiche le rang, le sommet et sa date au plus tôt
-			cout << '\t' << i + 1 << '\t' << m_rang[i][j] << '\t' << m_date_plus_tot[i][j] <<
+			cout << '\t' << i << '\t' << m_rang[i][j] << '\t' << m_date_plus_tot[i][j] <<
 				'\t' << m_date_plus_tard[i][j] << '\t' << '\t' << m_marge_totale[i][j] <<
 				'\t' << m_marge_libre[i][j] << endl;
 		}
@@ -488,62 +488,6 @@ void Graph::initializeDatePlusTard() {
 		}
 		m_date_plus_tard.push_back(vector<int>(j, 100));
 	}
-}
-
-int Graph::TardTemp(int sommet, int rang) {
-	int count = 0;
-	for (int s = 0; s < m_rang[rang + 1].size() - 1; s++) { // on regarde tous les sommets appartenant au rang superieur
-		for (int i = 0; i < m_arcs.size(); i++) { // on regarde s'il y a un arc existant entre le sommet actuel et l'un du rang superieur
-			if (m_arcs[i].getStart() == sommet && m_arcs[i].getFinish() == m_rang[rang + 1][s]) {
-				count++;
-			}
-
-		}
-	}
-	return count;
-}
-
-int Graph::TardFinal(int var_tmp, int sommet, int rang) {
-	int tmp = 0;
-	int i_tmp = 0;
-	int count = 0;
-	bool test = false;
-
-	if (rang + 1 > (m_tmp_rang - 2)) {
-		m_var = 0;
-		m_rollback = true;
-		return 0;
-	}
-	for (int s = 0; s < m_rang[rang + 1].size() - 1; s++) { // on regarde tous les sommets appartenant au rang superieur
-		for (int i = 0; i < m_arcs.size(); i++) { // on regarde s'il y a un arc existant entre le sommet actuel et l'un du rang superieur
-			if (m_arcs[i].getStart() == sommet && m_arcs[i].getFinish() == m_rang[rang + 1][s]) {
-
-				if (m_rollback == true) {
-					m_var = var_tmp;
-					m_rollback = false;
-				}
-				if (TardTemp(sommet, rang) > 1) {
-					var_tmp = m_var;
-				}
-
-				if ((m_var + m_arcs[i].getDuree()) > m_duree)
-					m_duree = m_var + m_arcs[i].getDuree();
-				m_var += m_arcs[i].getDuree();
-				m_var += TardFinal(var_tmp, m_arcs[i].getFinish(), rang + 1);
-
-				if (m_arcs[i].getDuree() > tmp) {
-					tmp = m_arcs[i].getDuree();
-					i_tmp = i;
-				}
-
-			}
-		}
-	}
-	if (tmp == 0)
-		return tmp + TardFinal(var_tmp, sommet, rang + 1);
-	else
-		return -1;
-
 }
 
 void Graph::calcDatePlusTard() {
