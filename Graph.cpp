@@ -316,9 +316,9 @@ void Graph::showRang() {
 	cout << '\t' << "------------------------" << endl;
 	for (int i = 0; i < m_rang.size() - 1; i++) {
 		cout << '\t' << i << '\t' << '|' << '\t';
-		for (int j = 0; j < m_rang[i].size(); j++) {
+		for (int j = 0; j < m_rang[i].size() - 1; j++) {
 			cout << m_rang[i][j];
-			if (j != m_rang[i].size() - 1)
+			if (j != m_rang[i].size() - 2)
 				cout << ", ";
 		}
 		cout << '\t' << '|' << endl;
@@ -367,81 +367,108 @@ bool Graph::circuitDetection() {
 
 bool Graph::detectionRang()
 {
-	int nbetats = 1;
-	if (m_entrees.size() == 0) { // il n'y a pas d'entrées donc circuit
-		cout << '\t' << "ERREUR --> le graph n'a pas d'entree" << endl;
-		return true;
-	}
+	ofstream file("traces" + m_fileName, ios::out | ios::trunc);
+	if (file)
+	{
+		int nbetats = 1;
+		if (m_entrees.size() == 0) { // il n'y a pas d'entrées donc circuit
+			cout << '\t' << "ERREUR --> le graph n'a pas d'entree" << endl;
+			file << '\t' << "ERREUR --> le graph n'a pas d'entree" << endl;
+			return true;
+		}
 
-	cout << '\t' << "Elimination au rang 0 : " << endl;
-
-	m_rang.push_back(vector<int>(m_entrees.size(), NULL)); // on connait le nombre d'états dans le rang
-	m_eliminations.push_back(vector<int>(0, 0));
-
-	for (int i = 0; i < m_entrees.size(); i++) { // on traite d'abord les entrées
-												 // on les met au rang 1
-		m_rang[0][i] = m_entrees[i];
-		cout << '\t' << '\t' << "sommet : " << m_entrees[i] << endl;
-		m_eliminations[0].push_back(m_entrees[i]);
+		cout << '\t' << "Elimination au rang 1 : " << endl;
+		file << '\t' << "Elimination au rang 1 : " << endl;
+		m_rang.push_back(vector<int>(m_entrees.size() + 1, NULL)); // on connaait le nombre d'états dans le rang
+		m_eliminations.push_back(vector<int>(0, 0));
+		for (int i = 0; i < m_entrees.size(); i++) { // on traite d'abord les entrées
+													 // on les met au rang 1
+			m_rang[0][i] = m_entrees[i];
+			cout << '\t' << '\t' << "sommet : " << m_entrees[i] << endl;
+			file << '\t' << '\t' << "sommet : " << m_entrees[i] << endl;
+			m_eliminations[0].push_back(m_entrees[i]);
+		}
+		// on supprime les sommets petit à petit
+		if (elimination()) {
+			// renvoie true donc il y a un circuit
+			return true;
+		}
+		return false;
 	}
-	// on supprime les sommets petit à petit
-	if (elimination()) {
-		// renvoie true donc il y a un circuit
-		return true;
-	}
-	return false;
+	else
+		cerr << "Error, cannot open/create file" << endl;
 }
 
 bool Graph::elimination()
 {
-	int final_z, z, i;
-	bool change = false;
-	do {
-		m_eliminations.push_back(vector<int>(0, 0));
-		cout << '\t' << "________________________" << endl;
-		z = 0;
-		i = 0;
-		std::vector<int> tmp_etat;
-		for (int k = 0; k < m_rang[m_tmp_rang - 1].size(); k++) {
-			i = m_rang[m_tmp_rang - 1][k];
-			for (int j = 0; j < m_nbSommets; j++) { // on se place à l'état j
-				if (m_tmp[j] == 0) { // l'état j n'a déjà plus d'antécédents
-									 // on ne fait rien
-				}
-				else {
-					if (m_adj2[i][j] == 1) { /// si l'état qu'on supprime fait parti des prédécesseurs de j
-
-						m_tmp[j]--; // un prédécesseur en moins
-
-						if (m_tmp[j] == 0) { // si maintenant il n'a plus de prédécesseurs, on a son rang
-							tmp_etat.push_back(j);
-							z++;
-						}
-						m_adj2[i][j] = false; // l'état qu'on supprime n'est plus un prédécesseur de j
+	ofstream file("traces" + m_fileName, ios::out | ios::app);
+	if (file)
+	{
+		int final_z, z, i;
+		bool change = false;
+		do {
+			m_eliminations.push_back(vector<int>(0, 0));
+			cout << '\t' << "________________________" << endl;
+			file << '\t' << "________________________" << endl;
+			z = 0;
+			i = 0;
+			std::vector<int> tmp_etat;
+			for (int k = 0; k < m_rang[m_tmp_rang - 1].size(); k++) {
+				i = m_rang[m_tmp_rang - 1][k];
+				for (int j = 0; j < m_nbSommets; j++) { // on se place à l'état j
+					if (m_tmp[j] == 0) { // l'état j n'a déjà plus d'antécédents
+										 // on ne fait rien
 					}
+					else {
+						if (m_adj2[i][j] == 1) { /// si l'état qu'on supprime fait parti des prédécesseurs de j
+
+							m_tmp[j]--; // un prédécesseur en moins
+
+							if (m_tmp[j] == 0) { // si maintenant il n'a plus de prédécesseurs, on a son rang
+								tmp_etat.push_back(j);
+								z++;
+							}
+							m_adj2[i][j] = false; // l'état qu'on supprime n'est plus un prédécesseur de j
+						}
+					}
+
 				}
-
 			}
-		}
-		m_rang.push_back(vector<int>(tmp_etat.size(), NULL)); // on connait le nombre d'états dans le rang
-		if(tmp_etat.size() != 0)
-			cout << '\t' << "Elimination au rang " << m_tmp_rang << " : "<< endl;
-		for (int n = 0; n < tmp_etat.size(); n++) {
-			m_rang[m_tmp_rang][n] = tmp_etat[n];
-			cout << '\t' << '\t' << "sommet : " << m_rang[m_tmp_rang][n] << endl;
-			m_eliminations[m_tmp_rang].push_back(m_rang[m_tmp_rang][n]);
-			change = true;
-		}
-		m_tmp_rang++; // on passe au calcul du rang suivants
-		if (change == false)
-			m_eliminations.pop_back();
-		change = false;
-		final_z = z;
-	} while (final_z != 0);
+			m_rang.push_back(vector<int>(tmp_etat.size() + 1, NULL)); // on connait le nombre d'états dans le rang
 
-	if (MatrAdjEqualstoZero())
-		return false;
-	return true;
+
+
+			if (tmp_etat.size() != 0)
+			{
+				cout << '\t' << "Elimination au rang " << m_tmp_rang + 1 << " : " << endl;
+				file << '\t' << "Elimination au rang " << m_tmp_rang + 1 << " : " << endl;
+			}
+			for (int n = 0; n < tmp_etat.size(); n++) {
+				m_rang[m_tmp_rang][n] = tmp_etat[n];
+				cout << '\t' << '\t' << "sommet : " << m_rang[m_tmp_rang][n] << endl;
+				file << '\t' << '\t' << "sommet : " << m_rang[m_tmp_rang][n] << endl;
+
+				m_eliminations[m_tmp_rang].push_back(m_rang[m_tmp_rang][n]);
+				change = true;
+			}
+			m_tmp_rang++; // on passe au calcul du rang suivants
+			if (change == false)
+				m_eliminations.pop_back();
+			change = false;
+			final_z = z;
+
+		} while (final_z != 0);
+
+		if (MatrAdjEqualstoZero())
+			return false;
+		return true;
+	}
+	else
+		cerr << "Error, cannot open/create file" << endl;
+}
+
+void Graph::setFileName(string name) {
+	m_fileName = name;
 }
 
 int Graph::getMaxDureeAntecedent(int sommet) {

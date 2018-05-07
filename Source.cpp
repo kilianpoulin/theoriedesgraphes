@@ -15,6 +15,9 @@ Graph create_graph()
 	file += file_name;
 	file += ".txt";                     //on ajoute le .txt
 	cout << file << endl;
+
+	// on enregistre le nom du fichier 
+	graphe.setFileName(file);
 	cout << endl;                   //file stock -> racine du fichier
     ifstream fichier(file.c_str());     //ifstream -> accËs en lecture du fichier
 

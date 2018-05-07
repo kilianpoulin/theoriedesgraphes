@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include "Arcs.h"
 
@@ -69,6 +70,7 @@ public:
 	std::vector<int> getProblem(std::vector<int>pb_contr);
 	void solveProblem(int sommet, std::vector<int> hist_contr);
 	void deleteArcs();
+	void setFileName(string name);
 
 
 	std::vector<vector<int>>m_contraintes;
@@ -101,6 +103,7 @@ private:
 	int m_duree = 0;
 	std::vector<vector<int>>m_eliminations;
 	std::vector<vector<bool>>m_matriceAdjacence2;
+	std::string  m_fileName;
 
 };
 

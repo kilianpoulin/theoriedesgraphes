@@ -26,7 +26,7 @@ void affichage(int niveau, Graph graphe) {
 		cout << "  => Affichage de la Matrice de Valeurs" << endl << endl;
 
 		graphe.setMatriceIncidence();
-		graphe.showMatriceIncidence();
+		//graphe.showMatriceIncidence();
 		cout << endl;
 
 		cout << "  => Detection de circuits" << endl << endl;
