@@ -82,7 +82,7 @@ void Graph::contrainteSetMatriceAdjacence() {
 	for (int i = 0; i < m_nbSommets + 1; i++) {
 		m_matriceAdjacence.push_back(vector<bool>(m_nbSommets + 1, false));
 	}
-
+	
 	for (int i = 0; i < m_nbArcs; i++) {
 		m_matriceAdjacence[m_arcs[i].getStart()][m_arcs[i].getFinish()] = true;
 	}
@@ -326,9 +326,13 @@ void Graph::showRang() {
 	}
 }
 
-void Graph::circuitDetection() {
-
+bool Graph::circuitDetection() {
+	m_eliminations.clear();
+	m_rang.clear();
+	m_tmp_rang = 1;
+	m_tmp.clear();
 	m_circuit = true;
+	
 	for (int x = 0; x < m_nbSommets; x++) //initialise le vector m_tmp
 	{
 		m_tmp.push_back(0);
@@ -352,10 +356,12 @@ void Graph::circuitDetection() {
 	if (detectionRang() == true)
 	{
 		cout << '\t' << "RESULTAT  ==> " << "Ce graphe contient un ou plusieurs circuits" << endl;
+		return true;
 	}
 	else
 	{
 		cout << '\t' << "RESULTAT  ==> " << "Ce graphe ne contient pas de circuits" << endl;
+		return false;
 	}
 }
 
@@ -827,6 +833,7 @@ bool Graph::AdjacenceTmpEqualstoZero() {
 }
 
 void Graph::contrainteSetEntrees() {
+	m_entrees.clear();
 	int tmp = 0;
 	for (int i = 1; i < m_nbSommets + 1; i++) {
 		tmp = 0;
@@ -843,6 +850,7 @@ void Graph::contrainteSetEntrees() {
 
 void Graph::contrainteSetSorties() {
 	int tmp = 0;
+	m_sorties.clear();
 	for (int i = 1; i < m_nbSommets + 1; i++) {
 		tmp = 0;
 		for (int j = 1; j < m_nbSommets + 1; j++) {
@@ -902,10 +910,164 @@ void Graph::setDurees(vector<int> durees) {
 	}
 }
 
+void Graph::setContraintes(vector<vector<int>> contraintes) {
+	m_contraintes = contraintes;
+}
 
+vector<int> Graph::getProblem(vector<int>pb_contr) {
+	vector<int>nd_contr;
+	int tmp = 0;
+	bool vector_null = true;
+	// maintenant on regarde les autres contraintes formant un circuit
+	for (int i = 0; i < pb_contr.size(); i++) {
+		if (pb_contr[i] != 0) {
+			for (int a = 0; a < m_arcs.size(); a++) {
+				if (m_arcs[a].getFinish() == pb_contr[i]) {
+					// on regarde s'il n'a pas déjà été implémanté
+					for (int r = 0; r < m_rang.size(); r++) {
+						for (int c = 0; c < m_rang[r].size(); c++) {
+							// la contrainte a déjà été implémentée
+							if (m_rang[r][c] == m_arcs[a].getStart()) {
+								// on ne la prend pas en compte dans le vecteur possiblilités
+								tmp = 1;
+							}
+						}
+					}
+					if (tmp == 0)
+						nd_contr.push_back(m_arcs[a].getStart());
+					tmp = 0;
+				}
+			}
+		}
+	}
+	// on vérifie que le tableau n'est pas null
+	for (int i = 0; i < nd_contr.size(); i++) {
+		if (nd_contr[i] != 0) {
+			vector_null = false;
+			break;
+		}
+	}
+	if (vector_null) {
+		exit(0);
+		return vector<int>(1, 100);
+	}
+	return nd_contr;
+}
 
+void Graph::showProblem() {
+	cout << "[Le programme a rencontre des problemes avec certaines contraintes... ]" << endl;
+	vector<int>probleme;
+	vector<int>pb_contr;
+	vector<int>nd_contr;
+	vector<int>history;
+	vector<vector<int>>hist_contr;
+	bool stop = false;
+	bool stop_contr = false;
+	int tmp = 0;
+	int size = 0;
 
+	// on cherche les successeurs du dernier état éliminé (il y a un problème à ce niveau là)
+	for (int i = 0; i < m_arcs.size(); i++) {
+		if (m_arcs[i].getStart() == m_eliminations[m_eliminations.size() - 1][m_eliminations[m_eliminations.size() - 1].size() - 1])
+			probleme.push_back(m_arcs[i].getFinish());
+	}
+	for (int j = 0; j < probleme.size(); j++) {
+		cout << '\t' << " Probleme a l'etat " << probleme[j] << endl;
+		cout << '\t' << "--> Il y a un probleme lors de la prise en  compte de la contrainte : " <<
+			probleme[j] << " a besoin de ";
 
+		// on créer le tableau de possibilités
+		for (int i = 0; i < m_contraintes[probleme[j]].size(); i++) {
+			pb_contr.push_back(m_contraintes[probleme[j]][i]);
+		}
+		// on élimine les contraintes déjà implémentées
+		for (int z = 0; z < m_contraintes[probleme[j]].size(); z++) {
+			//on parcourt les rangs précédents
+			for (int r = 0; r < m_rang.size(); r++) {
+				for (int c = 0; c < m_rang[r].size(); c++) {
+					// la contrainte a déjà été implémentée
+					if (m_rang[r][c] == m_contraintes[probleme[j]][z]) {
+						// on la supprime du vecteur de possibilités
+						pb_contr[z] = 0;
+					}
+				}
+			}
+		}
+		do {
+			for (int i = 0; i < pb_contr.size(); i++) {
+				if (pb_contr[i] != 0) {
+					nd_contr = getProblem(pb_contr);
 
+					// s'ily a encore des problèmes à montrer
+					if (nd_contr[0] != 100) {
+						for (int t = 0; t < nd_contr.size(); t++) {
+							for (int s = 0; s < history.size(); s++) {
+								if (history[s] == pb_contr[i])
+									stop_contr = true;
+							}
+							if (stop_contr == false) {
+								cout << endl << '\t' << '\t' << "associe a la contrainte " << pb_contr[i] << " a besoin de "
+									<< nd_contr[t];
+								history.push_back(pb_contr[i]);
+								hist_contr.push_back(vector<int>(1,nd_contr[t]));
+							}
+								if (nd_contr[t] == probleme[j])
+									stop = true;
+								cout << endl;
+							stop_contr = false;
+						}
+
+					}
+					pb_contr.clear();
+					for (int s = 0; s < nd_contr.size(); s++) {
+						pb_contr.push_back(nd_contr[s]);
+					}
+					nd_contr.clear();
+					size = getProblem(pb_contr).size();
+					for (int s = 0; s < size; s++) {
+						nd_contr.push_back(getProblem(pb_contr)[s]);
+					}
+				}
+			}
+		} while (nd_contr[0] != 100 && stop == false);
+			
+			/// on passe à la résolution des problèmes de contraintes :
+		for (int s = 0; s < history.size(); s++) {
+			solveProblem(history[s], hist_contr[s]);
+		}
+
+		}
+}
+
+void Graph::deleteArcs() {
+	m_arcs.clear();
+}
+
+void Graph::solveProblem(int sommet, vector<int> hist_contr) {
+	int contr = 0;
+	cout << endl << '\t' << "=> Resolution des problemes de contraintes <=" << endl << endl;
+	cout << '\t' << "Changement des contraintes du sommet " << sommet << endl;
+	cout << '\t' << "Contraintes actuelles : ";
+	for (int i = 0; i < m_contraintes[sommet].size(); i++) {
+		cout << m_contraintes[sommet][i];
+		if(i != m_contraintes[sommet].size() - 1)
+			cout << ",";
+	}
+
+	cout << endl << '\t' << "Contrainte posant probleme : " << hist_contr[0] << endl;
+
+	cout << endl << '\t' << "Saisie des nouvelles contraintes (une par ligne)" << endl;
+	cout << '\t' << "***Saisir 0 pour arreter l'ajout de contraintes***" << endl;
+
+	// on réinitialise les contraintes de ce sommet
+	m_contraintes[sommet].clear();
+	do {
+		cout << '\t' << ">>> ";
+		cin >> contr;
+		if(contr != 0)
+			m_contraintes[sommet].push_back(contr);
+	} while (contr != 0);
+
+}
 
 

@@ -15,6 +15,7 @@ public:
 	~Contraintes();
 	
 	Graph create_graph();
+	Graph regenerate_graph(Graph graph);
 };
 
 

@@ -36,7 +36,7 @@ public:
 	bool verifMemeSommetMemeValeur();
 	bool elimination();
 	bool detectionRang();
-	void circuitDetection();
+	bool circuitDetection();
 	bool MatrAdjEqualstoZero();
 	void showRang();
 	int getMaxDureeAntecedent(int sommet);
@@ -64,9 +64,17 @@ public:
 	void createAlpha();
 	void createOmega();
 	void setDurees(std::vector<int> durees);
+	void setContraintes(std::vector<vector<int>> contraintes);
+	void showProblem();
+	std::vector<int> getProblem(std::vector<int>pb_contr);
+	void solveProblem(int sommet, std::vector<int> hist_contr);
+	void deleteArcs();
+
+
+	std::vector<vector<int>>m_contraintes;
+	std::vector<int> m_durees;
 
 protected:
-
 private:
 	int m_nbSommets;
 	int m_nbArcs;
@@ -74,7 +82,6 @@ private:
 	int m_nbSorties;
 	int m_pointEntree;
 	int m_pointSortie;
-	std::vector<int> m_durees;
 	std::vector <Arcs> m_arcs;
 	std::vector< vector<bool> > m_matriceAdjacence;
     std::vector< vector<int> > m_matriceIncidence;
@@ -92,8 +99,6 @@ private:
 	int m_var = 0;
 	int m_var_tmp = 0;
 	int m_duree = 0;
-	std::vector<int>m_vars;
-	bool m_rollback = false;
 	std::vector<vector<int>>m_eliminations;
 	std::vector<vector<bool>>m_matriceAdjacence2;
 

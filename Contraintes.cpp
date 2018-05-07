@@ -19,6 +19,8 @@ Graph Contraintes::create_graph() {
 	Arcs tmp_arc;
 	vector <Arcs> arcs;
 	Graph graphe;
+	vector<vector<int>>contraintes;
+	vector<int>contr;
 	vector<int> durees;
 	durees.push_back(0);
 
@@ -53,7 +55,7 @@ Graph Contraintes::create_graph() {
 				stringstream ss(line);
 
 				count = 0;
-				// extract all words from line
+				// extraction de tous les éléments d'une ligne
 				while (ss >> word) {
 
 					if (count == 0) {
@@ -65,7 +67,9 @@ Graph Contraintes::create_graph() {
 					}
 					else if(word != 0) {
 						tmp_arc.setStart(word);   /// le sommet de départ
-
+						
+						contr.push_back(word); // la contrainte;
+						
 						tmp_arc.setDuree(duree[word - 1]); /// la durée de l'arc
 
 						if (tmp_arc.getFinish() != 0)
@@ -76,14 +80,45 @@ Graph Contraintes::create_graph() {
 					}
 					count++;
 				}
+				contraintes.push_back(contr);
+				contr.clear();
 
 			}
 		}
 		graphe.setDurees(durees);
+		graphe.setContraintes(contraintes);
 		/// On met les résultats dans l'objet graphe
 		graphe.setNbArcs(arcs.size());
 		graphe.setArcs(arcs);
 	}
+
+	return graphe;
+}
+
+
+
+Graph Contraintes::regenerate_graph(Graph graphe) {
+	Arcs tmp_arc;
+	vector <Arcs> arcs;
+
+	// on réinitialisise les arcs du graph
+	graphe.deleteArcs();
+
+	// on réinitialise le nombre de sommets (sans alpha et omega)
+	graphe.setNbSommets(graphe.m_contraintes.size() - 1);
+	
+	vector<int>duree;
+	for (int i = 0; i < graphe.m_contraintes.size(); i++) {
+		for (int j = 0; j < graphe.m_contraintes[i].size(); j++) {
+			tmp_arc.setFinish(i);
+			tmp_arc.setDuree(graphe.m_durees[graphe.m_contraintes[i][j]]);
+			tmp_arc.setStart(graphe.m_contraintes[i][j]);
+			arcs.push_back(tmp_arc);
+		}
+	}
+	/// On met les résultats dans l'objet graphe
+	graphe.setNbArcs(arcs.size());
+	graphe.setArcs(arcs);
 
 	return graphe;
 }
