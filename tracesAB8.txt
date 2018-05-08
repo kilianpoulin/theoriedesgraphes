@@ -1,0 +1,9 @@
+	Elimination au rang 1 : 
+		sommet : 0
+		sommet : 1
+		sommet : 3
+		sommet : 4
+	________________________
+	Elimination au rang 2 : 
+		sommet : 2
+	________________________

@@ -26,26 +26,23 @@ public:
 	void showMatriceAdjacence();
 	void contrainteSetMatriceAdjacence();
 	void contrainteshowMatriceAdjacence();
-	void contrainteSetMatriceIncidence();
-    void setMatriceIncidence();
-    void showMatriceIncidence();
 	bool verifMaxUneEntree();
 	bool verifMaxUneSortie();
 	bool verifAccessibleDepuisEntree();
 	bool verifAccessibleDepuisSortie();
 	bool verifValeursArcs();
 	bool verifMemeSommetMemeValeur();
-	bool elimination();
-	bool detectionRang();
-	bool circuitDetection();
+	bool elimination(bool comments);
+	bool detectionRang(bool comments);
+	bool circuitDetection(bool comments);
 	bool MatrAdjEqualstoZero();
 	void showRang();
 	int getMaxDureeAntecedent(int sommet);
 	void showCalendrier();
 	void calcDatePlusTot();
 	void initializeDatePlusTot();
-	void calcDatePlusTard();
-	void initializeDatePlusTard();
+	void calcDatePlusTard(float retard);
+	void initializeDatePlusTard(float retard);
 	void calcMargeTotale();
 	void initializeMargeTotale();
 	void initializeMargeLibre();
@@ -71,6 +68,8 @@ public:
 	void solveProblem(int sommet, std::vector<int> hist_contr);
 	void deleteArcs();
 	void setFileName(string name);
+	void getNextSommet(int sommet, int j);
+	void getNextSommetSortie(int sommet, int j);
 
 
 	std::vector<vector<int>>m_contraintes;
@@ -96,6 +95,7 @@ private:
 	int m_tmp_rang = 1;
 	std::vector<vector<int>>m_date_plus_tot;
 	std::vector<vector<int>>m_date_plus_tard;
+	std::vector<vector<float>>m_date_plus_tard2;
 	std::vector<vector<int>>m_marge_totale;
 	std::vector<vector<int>>m_marge_libre;
 	int m_var = 0;
@@ -104,6 +104,7 @@ private:
 	std::vector<vector<int>>m_eliminations;
 	std::vector<vector<bool>>m_matriceAdjacence2;
 	std::string  m_fileName;
+	std::vector<int>m_list_sommets;
 
 };
 

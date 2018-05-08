@@ -111,47 +111,6 @@ void Graph::contrainteshowMatriceAdjacence() {
 
 }
 
-void Graph::setMatriceIncidence() {
-	/**
-	* Generate the incidence matrix with the transition arcs.
-	*/
-	for (int i = 0; i < m_nbSommets; i++) {
-		m_matriceIncidence.push_back(vector<int>(m_nbArcs, false));
-	}
-	for (int j = 0; j < m_nbSommets; j++) {
-		for (int i = 0; i < m_nbArcs; i++) {
-			if (m_arcs[i].getFinish() == j)
-				m_matriceIncidence[j][i] = -1;
-		}
-	}
-	for (int j = 0; j < m_nbSommets; j++) {
-		for (int i = 0; i < m_nbArcs; i++) {
-			if (m_arcs[i].getStart() == j)
-				m_matriceIncidence[j][i] = 1;
-		}
-	}
-}
-
-void Graph::contrainteSetMatriceIncidence() {
-	m_matriceIncidence.clear();
-	for (int i = 0; i < m_nbSommets + 1; i++) {
-		m_matriceIncidence.push_back(vector<int>(m_nbArcs + 1, false));
-	}
-	for (int j = 0; j < m_nbSommets - 1; j++) {
-		for (int i = 0; i < m_nbArcs; i++) {
-			if (m_arcs[i].getFinish() == j)
-				m_matriceIncidence[j][i] = -1;
-		}
-	}
-	for (int j = 0; j < m_nbSommets - 1; j++) {
-		for (int i = 0; i < m_nbArcs; i++) {
-			if (m_arcs[i].getStart() == j)
-				m_matriceIncidence[j][i] = 1;
-		}
-	}
-}
-
-
 
 void Graph::showMatriceAdjacence() {
 	cout << '\t';
@@ -172,26 +131,6 @@ void Graph::showMatriceAdjacence() {
 		cout << endl;
 	}
 
-}
-
-void Graph::showMatriceIncidence() {
-	cout << '\t';
-	for (int i = 0; i < m_nbArcs; i++) {
-		cout << '\t' << i;
-	}
-	cout << endl;
-	cout << '\t';
-	for (int i = 0; i < m_nbArcs * 8; i++) {
-		cout << "-";
-	}
-	cout << endl;
-	for (int i = 0; i < m_nbSommets; i++) {
-		cout << '\t' << i << "  |";
-		for (int j = 0; j < m_nbArcs; j++) {
-			cout << '\t' << m_matriceIncidence[i][j];
-		}
-		cout << endl;
-	}
 }
 
 bool Graph::verifMaxUneEntree() {
@@ -257,23 +196,75 @@ bool Graph::verifMaxUneSortie() {
 		return false;
 }
 
-bool Graph::verifAccessibleDepuisEntree() {
-	for (int j = 0; j < m_nbSommets; j++) {
-		/// si l'entree n'est pas relié à l'un des points du graphe (sauf lui-même) --> faux
-		if (m_matriceAdjacence[m_pointEntree][j] == 0)
-			return false;
+void Graph::getNextSommet(int sommet, int j) {
+	/// si le sommet est relié à ce point du graphe --> vrai
+	// on retire le sommet de la liste --> on a trouvé une laison jusqu'à j
+	if (m_matriceAdjacence[sommet][j] == 1) {
+		m_list_sommets[j] = 0;
+
+		// on cherche si le sommet j permet de mener à d'autres sommets
+		for (int i = 0; i < m_matriceAdjacence[j].size(); i++) {
+			if (m_matriceAdjacence[j][i] == 1)
+				getNextSommet(j, i);
+		}
+
 	}
 
+}
+bool Graph::verifAccessibleDepuisEntree() {
+	if (circuitDetection(false))
+		return false;
+	// on créer un tableau contenant tous les sommets
+	for (int j = 0; j < m_nbSommets; j++) {
+		m_list_sommets.push_back(1);
+	}
+	for (int i = 0; i < m_nbSommets; i++) {
+		if(m_matriceAdjacence[m_pointEntree][i] == 1)
+			getNextSommet(m_pointEntree, i);
+	}
+	for (int i = 0; i < m_list_sommets.size(); i++) {
+		if (m_list_sommets[i] == 1 && i != m_pointEntree) {
+			return false;
+		}
+	}
 	return true;
 }
 
-bool Graph::verifAccessibleDepuisSortie() {
-	for (int i = 0; i < m_nbSommets; i++) {
-		/// si l'entree n'est pas relié à l'un des points du graphe (sauf lui-même) --> faux
-		if (m_matriceAdjacence[i][m_pointSortie] == 0)
-			return false;
+void Graph::getNextSommetSortie(int sommet, int j) {
+	/// si le sommet est relié à ce point du graphe --> vrai
+	// on retire le sommet de la liste --> on a trouvé une laison jusqu'à j
+	if (m_matriceAdjacence[sommet][j] == 1) {
+		m_list_sommets[sommet] = 0;
+	
+
+		// on cherche si le sommet j permet de mener à d'autres sommets
+		for (int i = 0; i < m_matriceAdjacence.size(); i++) {
+			if (m_matriceAdjacence[i][sommet] == 1) {
+				getNextSommetSortie(i, sommet);
+			}
+		
+		}
 	}
 
+
+}
+bool Graph::verifAccessibleDepuisSortie() {
+	if (circuitDetection(false))
+		return false;
+	m_list_sommets.clear();
+	// on créer un tableau contenant tous les sommets
+	for (int j = 0; j < m_nbSommets; j++) {
+		m_list_sommets.push_back(1);
+	}
+	for (int i = 0; i < m_nbSommets; i++) {
+		if (m_matriceAdjacence[i][m_pointSortie] == 1)
+			getNextSommetSortie(i, m_pointSortie);
+	}
+	for (int i = 0; i < m_list_sommets.size(); i++) {
+		if (m_list_sommets[i] == 1 && i != m_pointSortie) {
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -326,7 +317,7 @@ void Graph::showRang() {
 	}
 }
 
-bool Graph::circuitDetection() {
+bool Graph::circuitDetection(bool comments) {
 	m_eliminations.clear();
 	m_rang.clear();
 	m_tmp_rang = 1;
@@ -353,43 +344,47 @@ bool Graph::circuitDetection() {
 			m_entrees.push_back(i);
 	}
 
-	if (detectionRang() == true)
+	if (detectionRang(comments) == true)
 	{
-		cout << '\t' << "RESULTAT  ==> " << "Ce graphe contient un ou plusieurs circuits" << endl;
+		if(comments)
+			cout << '\t' << "RESULTAT  ==> " << "Ce graphe contient un ou plusieurs circuits" << endl;
 		return true;
 	}
 	else
 	{
-		cout << '\t' << "RESULTAT  ==> " << "Ce graphe ne contient pas de circuits" << endl;
+		if(comments)
+			cout << '\t' << "RESULTAT  ==> " << "Ce graphe ne contient pas de circuits" << endl;
 		return false;
 	}
 }
 
-bool Graph::detectionRang()
+bool Graph::detectionRang(bool comments)
 {
 	ofstream file("traces" + m_fileName, ios::out | ios::trunc);
 	if (file)
 	{
 		int nbetats = 1;
 		if (m_entrees.size() == 0) { // il n'y a pas d'entrées donc circuit
-			cout << '\t' << "ERREUR --> le graph n'a pas d'entree" << endl;
+			if(comments)
+				cout << '\t' << "ERREUR --> le graph n'a pas d'entree" << endl;
 			file << '\t' << "ERREUR --> le graph n'a pas d'entree" << endl;
 			return true;
 		}
-
-		cout << '\t' << "Elimination au rang 1 : " << endl;
+		if (comments)
+			cout << '\t' << "Elimination au rang 1 : " << endl;
 		file << '\t' << "Elimination au rang 1 : " << endl;
 		m_rang.push_back(vector<int>(m_entrees.size() + 1, NULL)); // on connaait le nombre d'états dans le rang
 		m_eliminations.push_back(vector<int>(0, 0));
 		for (int i = 0; i < m_entrees.size(); i++) { // on traite d'abord les entrées
 													 // on les met au rang 1
 			m_rang[0][i] = m_entrees[i];
-			cout << '\t' << '\t' << "sommet : " << m_entrees[i] << endl;
+			if (comments)
+				cout << '\t' << '\t' << "sommet : " << m_entrees[i] << endl;
 			file << '\t' << '\t' << "sommet : " << m_entrees[i] << endl;
 			m_eliminations[0].push_back(m_entrees[i]);
 		}
 		// on supprime les sommets petit à petit
-		if (elimination()) {
+		if (elimination(comments)) {
 			// renvoie true donc il y a un circuit
 			return true;
 		}
@@ -399,7 +394,7 @@ bool Graph::detectionRang()
 		cerr << "Error, cannot open/create file" << endl;
 }
 
-bool Graph::elimination()
+bool Graph::elimination(bool comments)
 {
 	ofstream file("traces" + m_fileName, ios::out | ios::app);
 	if (file)
@@ -408,7 +403,8 @@ bool Graph::elimination()
 		bool change = false;
 		do {
 			m_eliminations.push_back(vector<int>(0, 0));
-			cout << '\t' << "________________________" << endl;
+			if (comments)
+				cout << '\t' << "________________________" << endl;
 			file << '\t' << "________________________" << endl;
 			z = 0;
 			i = 0;
@@ -440,12 +436,14 @@ bool Graph::elimination()
 
 			if (tmp_etat.size() != 0)
 			{
-				cout << '\t' << "Elimination au rang " << m_tmp_rang + 1 << " : " << endl;
+				if (comments)
+					cout << '\t' << "Elimination au rang " << m_tmp_rang + 1 << " : " << endl;
 				file << '\t' << "Elimination au rang " << m_tmp_rang + 1 << " : " << endl;
 			}
 			for (int n = 0; n < tmp_etat.size(); n++) {
 				m_rang[m_tmp_rang][n] = tmp_etat[n];
-				cout << '\t' << '\t' << "sommet : " << m_rang[m_tmp_rang][n] << endl;
+				if (comments)
+					cout << '\t' << '\t' << "sommet : " << m_rang[m_tmp_rang][n] << endl;
 				file << '\t' << '\t' << "sommet : " << m_rang[m_tmp_rang][n] << endl;
 
 				m_eliminations[m_tmp_rang].push_back(m_rang[m_tmp_rang][n]);
@@ -520,33 +518,39 @@ void Graph::calcDatePlusTot() {
 }
 
 void Graph::showCalendrier() {
-	cout << '\t' << "Rang" << '\t' << "Sommet" << '\t' << "D+tot" << '\t' << "D+tard" << '\t'
-		<< '\t'<< "Marge T" << '\t' << "Marge L" << endl;
+	cout << '\t' << "Rang" << '\t' << "Sommet" << '\t' << "D+tot" << '\t' << "D+tard" << '\t' << "110%" << '\t'
+		<< "Marge T" << '\t' << "Marge L" << endl;
 	for (int i = 0; i < m_date_plus_tot.size() - 1; i++) {
-		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
+		for (int j = 0; j < m_date_plus_tot[i].size() - 1; j++) {
 			// on affiche le rang, le sommet et sa date au plus tôt
 			cout << '\t' << i << '\t' << m_rang[i][j] << '\t' << m_date_plus_tot[i][j] <<
-				'\t' << m_date_plus_tard[i][j] << '\t' << '\t' << m_marge_totale[i][j] <<
+				'\t' << m_date_plus_tard[i][j] << '\t' << m_date_plus_tard2[i][j] << '\t' << m_marge_totale[i][j] <<
 				'\t' << m_marge_libre[i][j] << endl;
 		}
 		cout << '\t' << "---------------------------------------------------------" << endl;
 	}
 }
 
-void Graph::initializeDatePlusTard() {
+void Graph::initializeDatePlusTard(float retard) {
 	int j = 0;
 	for (int i = 0; i < m_rang.size(); i++) {
 		for (j = 1; j < m_rang[i].size(); j++) {
 		}
-		m_date_plus_tard.push_back(vector<int>(j, 100));
+		if(retard != 1)
+			m_date_plus_tard2.push_back(vector<float>(j, 100));
+		else 
+			m_date_plus_tard.push_back(vector<int>(j, 100));
 	}
 }
 
-void Graph::calcDatePlusTard() {
+void Graph::calcDatePlusTard(float retard) {
 	// on initialise le vecteur date au plus tard
-	initializeDatePlusTard();
-	m_date_plus_tard[m_tmp_rang - 2][0] = m_date_plus_tot[m_tmp_rang - 2][0];
-	int tmp = 0;
+	initializeDatePlusTard(retard);
+	if(retard != 1)
+		m_date_plus_tard2[m_tmp_rang - 2][0] = m_date_plus_tot[m_tmp_rang - 2][0] * retard;
+	else
+		m_date_plus_tard[m_tmp_rang - 2][0] = m_date_plus_tot[m_tmp_rang - 2][0];
+	float tmp = 0;
 	for (int i = m_tmp_rang - 3; i >= 0; i--) {
 		for (int j = 0; j < m_rang[i].size(); j++) {
 			// on recherche la duree la plus grande entre l'état et ses antécédents
@@ -556,12 +560,21 @@ void Graph::calcDatePlusTard() {
 					for (int y = i; y < m_tmp_rang - 1; y++) {
 						for (int x = 0; x < m_rang[y].size(); x++) {
 							if (m_rang[y][x] == m_arcs[z].getFinish())
-								tmp = m_date_plus_tard[y][x];
+								if(retard != 1)
+									tmp = m_date_plus_tard2[y][x];
+								else
+									tmp = m_date_plus_tard[y][x];
 						}
 					}
 					tmp -= m_arcs[z].getDuree();
-					if (tmp < m_date_plus_tard[i][j])
-						m_date_plus_tard[i][j] = tmp;
+					if(retard != 1){
+						if (tmp < m_date_plus_tard2[i][j])
+							m_date_plus_tard2[i][j] = tmp;
+					}
+					else {
+						if (tmp < m_date_plus_tard[i][j])
+							m_date_plus_tard[i][j] = tmp;
+					}
 					tmp = 0;
 				}
 			}
@@ -762,14 +775,11 @@ bool Graph::showVerifications() {
 void Graph::showAntecedents() {
 	initializeAdjacenceTmp();
 	int z = 0;
-	int size;
-	int size_left;
-	int size_right;
-	int def = 4;
+	string line = "a";
 	vector<int> tmp;
 	cout << '\t' << "Sommet" << '\t' << '\t' << "T-1" << endl;
 	cout << '\t';
-	for (int i = 0; i < (m_eliminations.size() * 10); i++) {
+	for (int i = 0; i < (m_eliminations.size() * 13); i++) {
 		cout << '-';
 	}
 	cout << endl;
@@ -778,7 +788,8 @@ void Graph::showAntecedents() {
 		cout << '\t' << i << '\t' << "|" << '\t';
 		for (int j = 0; j < m_matriceAdjacence[i].size(); j++) { // l'état initial
 			if (m_matriceAdjacence[j][i] == 1) {
-				cout << j;
+				line = j;
+				cout << j << " ";
 			}
 		}
 		cout << '\t';
@@ -788,25 +799,20 @@ void Graph::showAntecedents() {
 					tmp.push_back(j);
 				}
 			}
-			size = tmp.size() / 2;
-			if (size % 2 == 1) {
-				size_left = trunc(size);
-				size_right = trunc(size - 1);
-			}
-			else {
-				size_left = size;
-				size_right = size;
+			if(line != "a")
+				cout << "|" << '\t';
+			for (int k = 0; k < tmp.size(); k++) {
+				cout << tmp[k] << " ";
 			}
 			if (tmp.size() == 0)
-				size_right = -1;
-			cout << "|" << create_space(def - size_left);
-			for (int k = 0; k < tmp.size(); k++) {
-				cout << tmp[k];
-			}
-			cout << create_space(def - size_right);
+				cout << " ";
+			if(z == 0)
+				cout << '\t' << " ";
+			else if(z > 0)
+				cout << '\t' << " ";
 			tmp.clear();
 			z++;
-			def = 4;
+			line = "a";
 		}
 		cout << endl;
 		z = 0;
@@ -841,6 +847,7 @@ bool Graph::showEliminations(int rang, int sommet) {
 }
 
 void Graph::initializeAdjacenceTmp() {
+	m_matriceAdjacence2.clear();
 	for (int i = 0; i < m_matriceAdjacence.size(); i++) {
 		m_matriceAdjacence2.push_back(vector<bool>(m_matriceAdjacence[i].size(), false));
 		for (int j = 0; j < m_matriceAdjacence[i].size(); j++) {

@@ -25,13 +25,11 @@ void affichage(int niveau, Graph graphe) {
 
 		cout << "  => Affichage de la Matrice de Valeurs" << endl << endl;
 
-		graphe.setMatriceIncidence();
-		//graphe.showMatriceIncidence();
 		cout << endl;
 
 		cout << "  => Detection de circuits" << endl << endl;
 
-		graphe.circuitDetection();
+		graphe.circuitDetection(true);
 		cout << endl;
 
 		cout << "  => Suivi de la detection et de l'elimination des sommets" << endl << endl;
@@ -48,11 +46,10 @@ void affichage(int niveau, Graph graphe) {
 				cout << "Calcul des calendriers et marges : " << endl << endl;
 
 				graphe.calcDatePlusTot(); ;
-				graphe.calcDatePlusTard();
+				graphe.calcDatePlusTard(1);
+				graphe.calcDatePlusTard(1.1);
 				graphe.calcMargeTotale();
 				graphe.calcMargeLibre();
-
-				graphe.calcDatePlusTard();
 
 				graphe.showCalendrier();
 			}
@@ -73,7 +70,6 @@ void affichage(int niveau, Graph graphe) {
 
 		// matrice d'adjacence sans alpha et omega
 		graphe.contrainteSetMatriceAdjacence();
-		graphe.contrainteSetMatriceIncidence();
 
 		graphe.contrainteSetEntrees();
 		graphe.contrainteSetSorties();
@@ -85,7 +81,6 @@ void affichage(int niveau, Graph graphe) {
 
 		// matrice d'adjacence avec apha et omega
 		graphe.contrainteSetMatriceAdjacence();
-		//graphe.contrainteSetMatriceIncidence();
 
 		graphe.show_graph();
 
@@ -96,21 +91,20 @@ void affichage(int niveau, Graph graphe) {
 		cout << endl;
 
 		//cout << "  => Affichage de la Matrice d'incidence" << endl << endl;
-		//graphe.showMatriceIncidence();
 
 		cout << endl;
 
 		cout << "  => Detection de circuits" << endl << endl;
 
 		// si le graphe contient un circuit
-		if (graphe.circuitDetection() && niveau != 3) {
+		if (graphe.circuitDetection(false) && niveau != 3) {
 			cout << endl << endl;
 			graphe.showProblem();
 			affichage(5, graphe);
 		}
 		else {
 
-			graphe.circuitDetection();
+			graphe.circuitDetection(true);
 			cout << endl;
 
 			cout << "  => Suivi de la detection et de l'elimination des sommets" << endl << endl;
@@ -127,7 +121,8 @@ void affichage(int niveau, Graph graphe) {
 			cout << "Calcul des calendriers et marges : " << endl << endl;
 
 			graphe.calcDatePlusTot();
-			graphe.calcDatePlusTard();
+			graphe.calcDatePlusTard(1);
+			graphe.calcDatePlusTard(1.1);
 			graphe.calcMargeTotale();
 			graphe.calcMargeLibre();
 			graphe.showCalendrier();

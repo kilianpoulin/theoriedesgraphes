@@ -1,0 +1,1 @@
+	ERREUR --> le graph n'a pas d'entree
