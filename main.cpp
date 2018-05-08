@@ -3,7 +3,6 @@
 #include "main.h"
 
 using namespace std;
-//test
 // fichier principal 
 
 void affichage(int niveau, Graph graphe) {
@@ -45,9 +44,12 @@ void affichage(int niveau, Graph graphe) {
 
 				cout << "Calcul des calendriers et marges : " << endl << endl;
 
-				graphe.calcDatePlusTot(); ;
+				// on détermine d'abord les durées de chaque état
+				graphe.calcDurees();
+
+				graphe.calcDatePlusTot();
 				graphe.calcDatePlusTard(1);
-				graphe.calcDatePlusTard(1.1);
+				graphe.calcDatePlusTard(1.1);	
 				graphe.calcMargeTotale(false);
 				graphe.calcMargeTotale(true);
 				graphe.calcMargeLibre();

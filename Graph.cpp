@@ -617,10 +617,21 @@ void Graph::initializeMargeLibre() {
 	}
 
 }
+
+void Graph::calcDurees() {
+	// on initialise le nombre de durées
+	for (int i = 0; i < m_arcs.size(); i++) {
+		m_durees.push_back(0);
+	}
+	for (int i = 0; i < m_arcs.size(); i++) {
+		m_durees[m_arcs[i].getStart()] = m_arcs[i].getDuree();
+	}
+}
 void Graph::calcMargeLibre() {
 	initializeMargeLibre();
 	int tmp = 100;
 	for (int i = 1; i < m_date_plus_tot.size() - 1; i++) {
+		cout << "i = " << i << endl;
 		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
 			// on s'intéresse aux successeurs
 			for (int z = 0; z < m_arcs.size(); z++) {

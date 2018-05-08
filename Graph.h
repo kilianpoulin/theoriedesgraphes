@@ -70,6 +70,7 @@ public:
 	void setFileName(string name);
 	void getNextSommet(int sommet, int j);
 	void getNextSommetSortie(int sommet, int j);
+	void calcDurees();
 
 
 	std::vector<vector<int>>m_contraintes;
