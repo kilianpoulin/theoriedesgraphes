@@ -519,15 +519,16 @@ void Graph::calcDatePlusTot() {
 
 void Graph::showCalendrier() {
 	cout << '\t' << "Rang" << '\t' << "Sommet" << '\t' << "D+tot" << '\t' << "D+tard" << '\t' << "110%" << '\t'
-		<< "Marge T" << '\t' << "Marge L" << endl;
+		<< "Marge T" << '\t' << "110%" << '\t' << "Marge L" << endl;
 	for (int i = 0; i < m_date_plus_tot.size() - 1; i++) {
 		for (int j = 0; j < m_date_plus_tot[i].size() - 1; j++) {
 			// on affiche le rang, le sommet et sa date au plus tôt
 			cout << '\t' << i << '\t' << m_rang[i][j] << '\t' << m_date_plus_tot[i][j] <<
 				'\t' << m_date_plus_tard[i][j] << '\t' << m_date_plus_tard2[i][j] << '\t' << m_marge_totale[i][j] <<
+				'\t' << m_marge_totale2[i][j] <<
 				'\t' << m_marge_libre[i][j] << endl;
 		}
-		cout << '\t' << "---------------------------------------------------------" << endl;
+		cout << '\t' << "----------------------------------------------------------------" << endl;
 	}
 }
 
@@ -582,20 +583,27 @@ void Graph::calcDatePlusTard(float retard) {
 	}
 }
 
-void Graph::initializeMargeTotale() {
+void Graph::initializeMargeTotale(bool retard) {
 	int j = 0;
 	for (int i = 0; i < m_rang.size(); i++) {
 		for (j = 1; j< m_rang[i].size(); j++) {
 		}
-		m_marge_totale.push_back(vector<int>(j, 0));
+		if(retard)
+			m_marge_totale2.push_back(vector<float>(j, 0));
+		else
+			m_marge_totale.push_back(vector<int>(j, 0));
 	}
 }
 
-void Graph::calcMargeTotale() {
-	initializeMargeTotale();
+void Graph::calcMargeTotale(bool retard) {
+
+	initializeMargeTotale(retard);
 	for (int i = 0; i < m_date_plus_tot.size(); i++) {
 		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
-			m_marge_totale[i][j] = m_date_plus_tard[i][j] - m_date_plus_tot[i][j];
+			if(retard)
+				m_marge_totale2[i][j] = m_date_plus_tard2[i][j] - (float) m_date_plus_tot[i][j];
+			else
+				m_marge_totale[i][j] = m_date_plus_tard[i][j] - m_date_plus_tot[i][j];
 		}
 	}
 }

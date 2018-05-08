@@ -43,8 +43,8 @@ public:
 	void initializeDatePlusTot();
 	void calcDatePlusTard(float retard);
 	void initializeDatePlusTard(float retard);
-	void calcMargeTotale();
-	void initializeMargeTotale();
+	void calcMargeTotale(bool retard);
+	void initializeMargeTotale(bool retard);
 	void initializeMargeLibre();
 	void calcMargeLibre();
 	bool showVerifications();
@@ -97,6 +97,7 @@ private:
 	std::vector<vector<int>>m_date_plus_tard;
 	std::vector<vector<float>>m_date_plus_tard2;
 	std::vector<vector<int>>m_marge_totale;
+	std::vector<vector<float>>m_marge_totale2;
 	std::vector<vector<int>>m_marge_libre;
 	int m_var = 0;
 	int m_var_tmp = 0;

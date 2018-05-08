@@ -48,7 +48,8 @@ void affichage(int niveau, Graph graphe) {
 				graphe.calcDatePlusTot(); ;
 				graphe.calcDatePlusTard(1);
 				graphe.calcDatePlusTard(1.1);
-				graphe.calcMargeTotale();
+				graphe.calcMargeTotale(false);
+				graphe.calcMargeTotale(true);
 				graphe.calcMargeLibre();
 
 				graphe.showCalendrier();
@@ -123,7 +124,8 @@ void affichage(int niveau, Graph graphe) {
 			graphe.calcDatePlusTot();
 			graphe.calcDatePlusTard(1);
 			graphe.calcDatePlusTard(1.1);
-			graphe.calcMargeTotale();
+			graphe.calcMargeTotale(false);
+			graphe.calcMargeTotale(true);
 			graphe.calcMargeLibre();
 			graphe.showCalendrier();
 			cout << endl;
