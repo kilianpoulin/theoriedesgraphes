@@ -1,5 +1,5 @@
-#ifndef ARCS_H
-#define ARCS_H
+#ifndef A7ARCS_H
+#define A7ARCS_H
 
 using namespace std;
 
@@ -23,4 +23,4 @@ private:
 	int m_finish;
 };
 
-#endif // ARCS_H
+#endif // A7ARCS_H

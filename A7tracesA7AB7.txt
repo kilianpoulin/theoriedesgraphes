@@ -1,12 +1,13 @@
 	Elimination au rang 1 : 
 		sommet : 0
+	________________________
+	Elimination au rang 2 : 
 		sommet : 1
+		sommet : 2
 		sommet : 3
 		sommet : 4
 		sommet : 5
+	________________________
+	Elimination au rang 3 : 
 		sommet : 6
-		sommet : 7
-		sommet : 8
-		sommet : 9
-		sommet : 10
 	________________________

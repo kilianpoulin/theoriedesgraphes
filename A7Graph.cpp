@@ -1,4 +1,4 @@
-#include "Graph.h"
+#include "A7Graph.h"
 #include <iostream>
 
 // Toutes les fonctions des graph
@@ -89,29 +89,6 @@ void Graph::contrainteSetMatriceAdjacence() {
 
 }
 
-
-void Graph::contrainteshowMatriceAdjacence() {
-	cout << '\t';
-	for (int i = 1; i < m_nbSommets + 1; i++) {
-		cout << '\t' << i;
-	}
-	cout << endl;
-	cout << '\t';
-	for (int i = 1; i < (m_nbSommets + 1) * 8; i++) {
-		cout << "-";
-	}
-	cout << endl;
-	for (int i = 1; i < (m_nbSommets + 1); i++) {
-		cout << '\t' << i << "  |";
-		for (int j = 0; j < m_nbSommets; j++) {
-			cout << '\t' << m_matriceAdjacence[i][j];
-		}
-		cout << endl;
-	}
-
-}
-
-
 void Graph::showMatriceAdjacence() {
 	cout << '\t';
 	for (int i = 0; i < m_nbSommets; i++) {
@@ -124,10 +101,63 @@ void Graph::showMatriceAdjacence() {
 	}
 	cout << endl;
 	for (int i = 0; i < m_nbSommets; i++) {
-		cout << '\t' << i << "  |";
+		cout << '\t' << i;
+		if (i < 10)
+			cout << "  |";
+		else
+			cout << " |";
 		for (int j = 0; j < m_nbSommets; j++) {
 			cout << '\t' << m_matriceAdjacence[i][j];
 		}
+		cout << endl;
+	}
+
+}
+
+void Graph::contrainteSetMatriceValeurs() {
+	m_matriceValeurs.clear();
+
+	for (int i = 0; i < m_nbSommets + 1; i++) {
+		m_matriceValeurs.push_back(vector<string>(m_nbSommets + 1, " "));
+	}
+
+	for (int i = 0; i < m_nbArcs; i++) {
+		m_matriceValeurs[m_arcs[i].getStart()][m_arcs[i].getFinish()] = to_string(m_arcs[i].getDuree());
+	}
+
+}
+
+void Graph::setMatriceValeurs() {
+	for (int i = 0; i < m_nbSommets; i++) {
+		m_matriceValeurs.push_back(vector<string>(m_nbSommets, ""));
+	}
+
+	for (int i = 0; i < m_nbArcs; i++) {
+		m_matriceValeurs[m_arcs[i].getStart()][m_arcs[i].getFinish()] = to_string(m_arcs[i].getDuree());
+	}
+}
+
+void Graph::showMatriceValeurs() {
+	cout << '\t';
+	for (int i = 0; i < m_nbSommets; i++) {
+		cout << '\t' << i;
+	}
+	cout << endl;
+	cout << '\t';
+	for (int i = 0; i < m_nbSommets * 8; i++) {
+		cout << "-";
+	}
+	cout << endl;
+	for (int i = 0; i < m_nbSommets; i++) {
+		cout << '\t' << i;
+		if (i < 10)
+			cout << "  |";
+		else
+			cout << " |";
+		for (int j = 0; j < m_nbSommets; j++) {
+			cout << '\t' << m_matriceValeurs[i][j];
+		}
+
 		cout << endl;
 	}
 
@@ -360,7 +390,7 @@ bool Graph::circuitDetection(bool comments) {
 
 bool Graph::detectionRang(bool comments)
 {
-	ofstream file("traces" + m_fileName, ios::out | ios::trunc);
+	ofstream file("A7traces" + m_fileName, ios::out | ios::trunc);
 	if (file)
 	{
 		int nbetats = 1;
@@ -396,7 +426,7 @@ bool Graph::detectionRang(bool comments)
 
 bool Graph::elimination(bool comments)
 {
-	ofstream file("traces" + m_fileName, ios::out | ios::app);
+	ofstream file("A7traces" + m_fileName, ios::out | ios::app);
 	if (file)
 	{
 		int final_z, z, i;
@@ -631,7 +661,6 @@ void Graph::calcMargeLibre() {
 	initializeMargeLibre();
 	int tmp = 100;
 	for (int i = 1; i < m_date_plus_tot.size() - 1; i++) {
-		cout << "i = " << i << endl;
 		for (int j = 0; j < m_date_plus_tot[i].size(); j++) {
 			// on s'intéresse aux successeurs
 			for (int z = 0; z < m_arcs.size(); z++) {
@@ -1018,6 +1047,7 @@ void Graph::showProblem() {
 	bool stop_contr = false;
 	int tmp = 0;
 	int size = 0;
+	int count = 0;
 
 	// on cherche les successeurs du dernier état éliminé (il y a un problème à ce niveau là)
 	for (int i = 0; i < m_arcs.size(); i++) {
@@ -1049,6 +1079,8 @@ void Graph::showProblem() {
 		do {
 			for (int i = 0; i < pb_contr.size(); i++) {
 				if (pb_contr[i] != 0) {
+					if(count == 0)
+						cout << pb_contr[i];
 					nd_contr = getProblem(pb_contr);
 
 					// s'ily a encore des problèmes à montrer
@@ -1082,6 +1114,7 @@ void Graph::showProblem() {
 					}
 				}
 			}
+			count++;
 		} while (nd_contr[0] != 100 && stop == false);
 			
 			/// on passe à la résolution des problèmes de contraintes :
@@ -1122,5 +1155,3 @@ void Graph::solveProblem(int sommet, vector<int> hist_contr) {
 	} while (contr != 0);
 
 }
-
-

@@ -15,54 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="A7Source.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
+    <ClCompile Include="A7main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Arcs.cpp">
+    <ClCompile Include="A7Graph.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Contraintes.cpp">
+    <ClCompile Include="A7Contraintes.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
+    <ClCompile Include="A7Arcs.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
+    <ClInclude Include="A7Source.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Graph.h">
+    <ClInclude Include="A7main.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Arcs.h">
+    <ClInclude Include="A7Graph.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Contraintes.h">
+    <ClInclude Include="A7Contraintes.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Source.h">
+    <ClInclude Include="A7Arcs.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="1.txt" />
-    <Text Include="CO1.txt" />
-    <Text Include="2.txt" />
-    <Text Include="3.txt" />
-    <Text Include="10.txt" />
-    <Text Include="5.txt" />
-    <Text Include="11.txt" />
-    <Text Include="CO11.txt" />
-    <Text Include="CO23.txt" />
-    <Text Include="23.txt" />
-    <Text Include="AB9.txt" />
-    <Text Include="AB5.txt" />
-    <Text Include="AB6.txt" />
-    <Text Include="AB7.txt" />
-    <Text Include="AB8.txt" />
+    <Text Include="A7AB5.txt" />
+    <Text Include="A7AB6.txt" />
+    <Text Include="A7AB7.txt" />
+    <Text Include="A7AB8.txt" />
+    <Text Include="A7AB9.txt" />
+    <Text Include="A7AB1.txt" />
+    <Text Include="A7AB2.txt" />
+    <Text Include="A7AB3.txt" />
+    <Text Include="A7AB4.txt" />
+    <Text Include="A7tracesA7AB1.txt" />
+    <Text Include="A7tracesA7AB2.txt" />
+    <Text Include="A7tracesA7AB3.txt" />
+    <Text Include="A7tracesA7AB4.txt" />
+    <Text Include="A7tracesA7AB9.txt" />
+    <Text Include="A7tracesA7AB8.txt" />
+    <Text Include="A7tracesA7AB7.txt" />
+    <Text Include="A7tracesA7AB6.txt" />
+    <Text Include="A7tracesA7AB5.txt" />
   </ItemGroup>
 </Project>

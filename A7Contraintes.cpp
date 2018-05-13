@@ -1,4 +1,4 @@
-#include "Contraintes.h"
+#include "A7Contraintes.h"
 
 Contraintes::Contraintes()
 {
@@ -26,14 +26,13 @@ Graph Contraintes::create_graph() {
 
 	cout << "Veuillez choisir un fichier de contraintes (nombre : 1 -> 122)" << endl;
 	cout << "fichier de contrainte : ";
-	string file2 = "AB";
+	string file2 = "A7AB";
 	string file;
 	cin >> file;                          //L'utilisateur doit rentrer un nombre allant de 01 à 122
-
 	if (file != "-1") {
 		file2 += file;
 		file2 += ".txt";                     //on ajoute le .txt
-											 //cout << endl;                   //file stock -> racine du fichier
+		graphe.setFileName(file2);			 //cout << endl;                   //file stock -> racine du fichier
 		ifstream fichier(file2.c_str());     //ifstream -> accès en lecture du fichier
 
 		if (fichier) {

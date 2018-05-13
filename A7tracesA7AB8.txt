@@ -1,0 +1,21 @@
+	Elimination au rang 1 : 
+		sommet : 0
+	________________________
+	Elimination au rang 2 : 
+		sommet : 1
+	________________________
+	Elimination au rang 3 : 
+		sommet : 5
+	________________________
+	Elimination au rang 4 : 
+		sommet : 4
+	________________________
+	Elimination au rang 5 : 
+		sommet : 2
+	________________________
+	Elimination au rang 6 : 
+		sommet : 3
+	________________________
+	Elimination au rang 7 : 
+		sommet : 6
+	________________________

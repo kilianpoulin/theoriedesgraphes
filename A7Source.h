@@ -1,7 +1,7 @@
 #ifndef SOURCE_H_INCLUDED
 #define SOURCE_H_INCLUDED
 
-#include "main.h"
+#include "A7main.h"
 
 Graph create_graph();
 

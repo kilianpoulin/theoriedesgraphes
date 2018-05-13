@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "Graph.h"
-#include "Arcs.h"
+#include "A7Graph.h"
+#include "A7Arcs.h"
 #include <string>
 #include <vector>
 #include <sstream>

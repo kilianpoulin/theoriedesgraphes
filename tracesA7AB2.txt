@@ -1,0 +1,57 @@
+	________________________
+	Elimination au rang 2 : 
+		sommet : 2
+		sommet : 9
+		sommet : 8
+	________________________
+	Elimination au rang 3 : 
+		sommet : 1
+		sommet : 5
+	________________________
+	Elimination au rang 4 : 
+		sommet : 7
+	________________________
+	Elimination au rang 5 : 
+		sommet : 10
+	________________________
+	Elimination au rang 6 : 
+		sommet : 4
+	________________________
+	________________________
+	Elimination au rang 2 : 
+		sommet : 2
+		sommet : 9
+		sommet : 8
+	________________________
+	Elimination au rang 3 : 
+		sommet : 1
+		sommet : 5
+	________________________
+	Elimination au rang 4 : 
+		sommet : 7
+	________________________
+	Elimination au rang 5 : 
+		sommet : 10
+	________________________
+	Elimination au rang 6 : 
+		sommet : 4
+	________________________
+	________________________
+	Elimination au rang 2 : 
+		sommet : 2
+		sommet : 9
+		sommet : 8
+	________________________
+	Elimination au rang 3 : 
+		sommet : 1
+		sommet : 5
+	________________________
+	Elimination au rang 4 : 
+		sommet : 7
+	________________________
+	Elimination au rang 5 : 
+		sommet : 10
+	________________________
+	Elimination au rang 6 : 
+		sommet : 4
+	________________________

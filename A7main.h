@@ -1,5 +1,5 @@
-#ifndef MAIN_H_INCLUDED
-#define MAIN_H_INCLUDED
+#ifndef A7MAIN_H_INCLUDED
+#define A7MAIN_H_INCLUDED
 
 using namespace std;
 
@@ -9,10 +9,10 @@ using namespace std;
 #include <vector>
 #include <sstream>
 
-#include "Contraintes.h"
-#include "Arcs.h"
-#include "Graph.h"
-#include "Source.h"
+#include "A7Contraintes.h"
+#include "A7Arcs.h"
+#include "A7Graph.h"
+#include "A7Source.h"
 
 
 

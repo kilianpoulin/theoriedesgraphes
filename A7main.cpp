@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "main.h"
+#include "A7main.h"
 
 using namespace std;
 // fichier principal 
@@ -23,6 +23,8 @@ void affichage(int niveau, Graph graphe) {
 		cout << endl;
 
 		cout << "  => Affichage de la Matrice de Valeurs" << endl << endl;
+		graphe.setMatriceValeurs();
+		graphe.showMatriceValeurs();
 
 		cout << endl;
 
@@ -73,6 +75,7 @@ void affichage(int niveau, Graph graphe) {
 
 		// matrice d'adjacence sans alpha et omega
 		graphe.contrainteSetMatriceAdjacence();
+		graphe.contrainteSetMatriceValeurs();
 
 		graphe.contrainteSetEntrees();
 		graphe.contrainteSetSorties();
@@ -84,12 +87,16 @@ void affichage(int niveau, Graph graphe) {
 
 		// matrice d'adjacence avec apha et omega
 		graphe.contrainteSetMatriceAdjacence();
+		graphe.contrainteSetMatriceValeurs();
 
+
+		cout << "Apres ajout des etats alpha et omega " << endl;
 		graphe.show_graph();
 
 		///Affichage de la Matrice d'adjacence
 		cout << "  => Affichage de la Matrice d'adjacence" << endl << endl;
 		graphe.showMatriceAdjacence();
+		graphe.showMatriceValeurs();
 
 		cout << endl;
 

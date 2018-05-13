@@ -1,0 +1,30 @@
+	________________________
+	Elimination au rang 2 : 
+		sommet : 8
+	________________________
+	Elimination au rang 3 : 
+		sommet : 5
+	________________________
+	Elimination au rang 4 : 
+		sommet : 7
+	________________________
+	________________________
+	Elimination au rang 2 : 
+		sommet : 8
+	________________________
+	Elimination au rang 3 : 
+		sommet : 5
+	________________________
+	Elimination au rang 4 : 
+		sommet : 7
+	________________________
+	________________________
+	Elimination au rang 2 : 
+		sommet : 8
+	________________________
+	Elimination au rang 3 : 
+		sommet : 5
+	________________________
+	Elimination au rang 4 : 
+		sommet : 7
+	________________________

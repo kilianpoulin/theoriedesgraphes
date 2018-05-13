@@ -1,11 +1,11 @@
-#include "Source.h"
+#include "A7Source.h"
 
 Graph create_graph()
 {
 	int nbArcs, nbSommets;
 	int start, finish, duree;
 	string  file_name = "0";
-	string file = "AB";
+	string file = "A7AB";
 	Graph graphe;
 
 	cout << '\t' << "Bonjour, veuillez choisir un graphe (nombre : 0 -> 16)" << endl;
